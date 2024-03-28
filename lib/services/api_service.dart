@@ -51,10 +51,9 @@ class ApiService {
   ///
   /// Retourne une liste d'objets `Movie` si la requête est réussie.
   /// Sinon, lève une exception contenant la réponse de la requête.
-  Future<List<Producer>> getProducer(int pageNumber) async {
-    int producerCount = 0;
+  Future<List<Producer>> getAllProducer() async {
     Response response = await getData("/producers", params: {
-      'page': pageNumber,
+      'page': 1,
     });
     if (response.statusCode == 200) {
       Map data = response.data;
@@ -100,7 +99,7 @@ class ApiService {
     }
   }
 
-  Future<List<User>> getUser(int pageNumber) async {
+  Future<List<User>> getAllUser() async {
     Response response = await getData("/users");
     if (response.statusCode == 200) {
       Map data = response.data;
