@@ -73,11 +73,11 @@ class NewWorldMobile extends StatelessWidget {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case ProductPage.routeName:
-                    return ProductPage();
+                    return ProductPage(settingsController: settingsController);
                   case InfoPage.routeName:
                     return const InfoPage();
                   default:
-                    return ProductPage();
+                    return ProductPage(settingsController: settingsController);
                 }
               },
             );

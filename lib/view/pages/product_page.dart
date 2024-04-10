@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../src/settings/settings_controller.dart';
 import '../components/navigationbar.dart';
 import '../../model/product.dart';
 import '../../services/api_service.dart';
 import '../components/card.dart';
 
 class ProductPage extends StatelessWidget {
-  ProductPage({super.key});
+  ProductPage({super.key, required this.settingsController});
   static const routeName = '/';
+  final SettingsController settingsController;
   List<Producer> card = [];
 
   Future<void> setProducer() async {
@@ -34,7 +36,7 @@ class ProductPage extends StatelessWidget {
                 },
               ),
             ),
-            bottomNavigationBar: BottomNavigationBarPage(routeName: routeName,)
+            bottomNavigationBar: BottomNavigationBarPage(routeName: routeName, settingsController: settingsController,)
           );
         });
   }
