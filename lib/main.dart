@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_world_mobile/view/components/navigation_menu.dart';
+// import 'package:new_world_mobile/view/components/navigation_menu.dart';
+import 'package:new_world_mobile/view/pages/welcome_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       // On charge d'abord la bottum bar afin que cette dernière ce charge de nous rediriger sur les autres
       // pages et ainsi toujours avoir la bottom bar
-      home: const NavigationMenu(),
+      home: WelcomePage(),
     );
   }
 }
