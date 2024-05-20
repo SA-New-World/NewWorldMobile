@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart'; // Importation de Flutter Material Design
 import 'package:new_world_mobile/view/components/delayed_animation.dart'; // Importation du widget DelayedAnimation
-import 'package:new_world_mobile/view/pages/info_page.dart'; // Importation de la page InfoPage
+// import 'package:new_world_mobile/view/pages/info_page.dart';
+import 'package:new_world_mobile/view/pages/login_signup_page.dart'; // Importation de la page InfoPage
 
 // Définition d'un StatelessWidget nommé WelcomePage
 class WelcomePage extends StatelessWidget {
@@ -56,7 +57,7 @@ class WelcomePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const InfoPage() // Navigation vers InfoPage lorsqu'on appuie sur le bouton
+                                const LoginPage() // Navigation vers InfoPage lorsqu'on appuie sur le bouton
                             ),
                       );
                     },

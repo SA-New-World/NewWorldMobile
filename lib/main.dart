@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // On charge d'abord la bottum bar afin que cette dernière ce charge de nous rediriger sur les autres
-      // pages et ainsi toujours avoir la bottom bar
+      debugShowCheckedModeBanner: false,
+      // On charge d'abord la page de bienvenue
       home: WelcomePage(),
     );
   }
