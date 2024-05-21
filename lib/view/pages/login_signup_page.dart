@@ -42,12 +42,14 @@ class LoginPage extends StatelessWidget {
                 DelayedAnimation(
                   delay:
                       1500, // Délai avant l'affichage de cet élément (1500ms)
-                  child: Text(
-                    "Connect email adress",
-                    style: GoogleFonts.poppins(
-                      color: Colors.red,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
+                  child: Center(
+                    child: Text(
+                      "Se connecter",
+                      style: GoogleFonts.poppins(
+                        color: Colors.red,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -57,12 +59,16 @@ class LoginPage extends StatelessWidget {
                 DelayedAnimation(
                   delay:
                       2500, // Délai avant l'affichage de cet élément (2500ms)
-                  child: Text(
-                    'Mettre un texte là',
-                    style: GoogleFonts.poppins(
-                      color: Colors.grey[600],
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  child: Center(
+
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'Veuillez vous connecter pour accéder à votre compte et profiter de tous nos services exclusifs.',
+                      style: GoogleFonts.poppins(
+                        color: Colors.grey[600],
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
@@ -88,7 +94,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'CONFIRM',
+                'CONFIRMER',
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize: 15,
@@ -131,7 +137,7 @@ class _LoginFormState extends State<LoginForm> {
             delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
               decoration: InputDecoration(
-                labelText: "Your Email", // Label du champ de texte
+                labelText: "Votre Email", // Label du champ de texte
                 labelStyle: TextStyle(
                   color: Colors.grey[400], // Couleur du label
                 ),
@@ -150,7 +156,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.grey[400], // Couleur du label
                 ),
                 labelText:
-                    'Password', // Label du champ de texte pour le mot de passe
+                    'Mot de passe', // Label du champ de texte pour le mot de passe
                 suffixIcon: IconButton(
                   icon: Icon(Icons.visibility,
                       color: Colors
