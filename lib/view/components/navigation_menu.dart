@@ -4,6 +4,8 @@ import 'package:new_world_mobile/view/pages/cart_page.dart';
 import 'package:new_world_mobile/view/pages/info_page.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
 
+import 'package:new_world_mobile/view/pages/settings_page.dart';
+
 // ignore: must_be_immutable
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -58,9 +60,8 @@ class NavigationController extends GetxController {
     // Exemple de page avec un Container rouge
 
     //To do : Changer ce container par une page favoris qui vas stocker les favoris de l'utilisateur connecté
-    Container(
-      color: Colors.red,
-    ),
+    const SettingsView(),
+
     // Page d'informations (constante car n'a pas besoin de changement dynamique pour l'instant)
     const InfoPage(),
   ];
