@@ -24,6 +24,7 @@ class Settings with ChangeNotifier {
   /// Initialise SharedPreferences. Doit être appelé avant toute opération.
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
+    // Récupère le thème depuis l'instance de SharedPreferences
     String? themeModeName = _prefs?.getString('themeMode');
     if (themeModeName == ThemeMode.light.name) {
       _themeMode = ThemeMode.light;

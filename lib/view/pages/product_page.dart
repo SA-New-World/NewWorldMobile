@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/product.dart';
-import '../../services/api_service.dart';
+import '../../services/api/api_service.dart';
 import '../components/card.dart';
 
 // ignore: must_be_immutable

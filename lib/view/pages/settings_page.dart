@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/settings.dart';
+import '../../services/settings/settings.dart';
 
 /// Displays the various settings that can be customized by the user.
 ///
@@ -24,7 +24,7 @@ class SettingsView extends StatelessWidget {
         // When a user selects a theme from the dropdown list, the
         // SettingsController is updated, which rebuilds the MaterialApp.
         child: DropdownButton<ThemeMode>(
-          // Read the selected themeMode from the controller
+          // Read the selected themeMode from the Singleton
           value: Settings().themeMode,
           // Call the updateThemeMode method any time the user selects a theme.
           onChanged: Settings().updateThemeMode,
