@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_world_mobile/view/components/navigation_menu.dart';
 // import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/components/product_card.dart';
 import '../../models/product.dart';
@@ -22,8 +23,8 @@ class ProductPage extends StatelessWidget {
       future: setProducer(),
       builder: (context, AsyncSnapshot snapchot) {
         return Scaffold(
-          body: /*SingleChildScrollView(
-           child: Column(
+          body: SingleChildScrollView(
+            child: Column(
               children: [
                 Text(
                   'Nom de la Catégorie',
@@ -63,21 +64,22 @@ class ProductPage extends StatelessWidget {
                 ),
               ],
             ),
-          ), 
-          */
-              ListView.builder(
-            itemCount: card.length,
-            itemBuilder: (context, index) {
-              return Card(
-                color: Colors.blue,
-                child: ProductCard(
-                  cardCategory: card[index].name,
-                  cardImg: 'images/FirstProduct.jpg',
-                  cardPrice: card[index].price,
-                ),
-              );
-            },
           ),
+          // bottomNavigationBar: NavigationMenu(),
+
+          //     ListView.builder(
+          //   itemCount: card.length,
+          //   itemBuilder: (context, index) {
+          //     return Card(
+          //       color: Colors.blue,
+          //       child: ProductCard(
+          //         cardCategory: card[index].name,
+          //         cardImg: 'images/FirstProduct.jpg',
+          //         cardPrice: card[index].price,
+          //       ),
+          //     );
+          //   },
+          // ),
         );
       },
     );

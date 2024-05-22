@@ -40,9 +40,9 @@ class MyAppState extends State<MyApp> {
         textTheme: const TextTheme(
           bodyLarge: TextStyle(),
           bodyMedium: TextStyle(),
-          ).apply(
-            bodyColor: Colors.white,
-            displayColor: Colors.white,
+        ).apply(
+          bodyColor: Colors.white,
+          displayColor: Colors.white,
         ),
         scaffoldBackgroundColor: Colors.black,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

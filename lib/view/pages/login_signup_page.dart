@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_world_mobile/main.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import commenté, non utilisé
 import 'package:new_world_mobile/view/components/delayed_animation.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
@@ -42,15 +43,13 @@ class LoginPage extends StatelessWidget {
                 children: [
                   DelayedAnimation(
                     delay:
-                        500, // Délai avant l'affichage de cet élément (1500ms)
-                    child: Center(
-                      child: Text(
-                        "Se connecter",
-                        style: GoogleFonts.poppins(
-                          color: Colors.red,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        1500, // Délai avant l'affichage de cet élément (1500ms)
+                    child: Text(
+                      "Connect email adress",
+                      style: GoogleFonts.poppins(
+                        color: Colors.red,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -59,16 +58,13 @@ class LoginPage extends StatelessWidget {
                   ),
                   DelayedAnimation(
                     delay:
-                        600, // Délai avant l'affichage de cet élément (2500ms)
-                    child: Center(
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        'Veuillez vous connecter pour accéder à votre compte et profiter de tous nos services exclusifs.',
-                        style: GoogleFonts.poppins(
-                          color: Colors.grey[600],
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        2500, // Délai avant l'affichage de cet élément (2500ms)
+                    child: Text(
+                      'Mettre un texte là',
+                      style: GoogleFonts.poppins(
+                        color: Colors.grey[600],
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -83,7 +79,7 @@ class LoginPage extends StatelessWidget {
               height: 125, // Espacement vertical de 125 pixels
             ),
             DelayedAnimation(
-              delay: 1000, // Délai avant l'affichage de cet élément (5500ms)
+              delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red, // Couleur de fond du bouton
@@ -94,7 +90,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'CONFIRMER',
+                  'CONFIRM',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 15,
@@ -106,7 +102,7 @@ class LoginPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          ProductPage(), // Navigue vers la page des produits
+                          ProductPage(), // Navigue vers la classe MyApp
                     ),
                   );
                 },
@@ -115,7 +111,6 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationMenu(),
     );
   }
 }
@@ -136,10 +131,10 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 800, // Délai avant l'affichage de cet élément (3500ms)
+            delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
               decoration: InputDecoration(
-                labelText: "Votre Email", // Label du champ de texte
+                labelText: "Your Email", // Label du champ de texte
                 labelStyle: TextStyle(
                   color: Colors.grey[400], // Couleur du label
                 ),
@@ -150,7 +145,7 @@ class _LoginFormState extends State<LoginForm> {
             height: 30, // Espacement vertical de 30 pixels
           ),
           DelayedAnimation(
-            delay: 900, // Délai avant l'affichage de cet élément (4500ms)
+            delay: 4500, // Délai avant l'affichage de cet élément (4500ms)
             child: TextField(
               obscureText: _obsureText, // Gère la visibilité du texte
               decoration: InputDecoration(
@@ -158,7 +153,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.grey[400], // Couleur du label
                 ),
                 labelText:
-                    'Mot de passe', // Label du champ de texte pour le mot de passe
+                    'Password', // Label du champ de texte pour le mot de passe
                 suffixIcon: IconButton(
                   icon: Icon(Icons.visibility,
                       color: Colors
