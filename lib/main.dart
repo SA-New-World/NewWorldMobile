@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_world_mobile/view/components/navigation_menu.dart';
+// import 'package:new_world_mobile/view/components/navigation_menu.dart';
 // import 'package:new_world_mobile/view/components/navigation_menu.dart';
 // import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/pages/welcome_page.dart';
