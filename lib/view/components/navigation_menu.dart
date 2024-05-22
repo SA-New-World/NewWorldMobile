@@ -33,9 +33,9 @@ class NavigationMenu extends StatelessWidget {
             controller.selectedIndex.value = index,
 // Liste de destinations de navigation avec des icônes et des libellés correspondants
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.storefront), label: 'Cart'),
-          NavigationDestination(icon: Icon(Icons.favorite), label: 'Favorite'),
+          NavigationDestination(icon: Icon(Icons.home), label: 'Accueil'),
+          NavigationDestination(icon: Icon(Icons.storefront), label: 'Panier'),
+          NavigationDestination(icon: Icon(Icons.favorite), label: 'Favories'),
           NavigationDestination(icon: Icon(Icons.face), label: 'Profil'),
         ],
       ),

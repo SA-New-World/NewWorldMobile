@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
 // import 'package:new_world_mobile/view/components/navigation_menu.dart';
+// import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/pages/welcome_page.dart';
 
 import 'services/settings.dart';
@@ -18,7 +19,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-
   ThemeMode themeMode = Settings().themeMode;
 
   // make the access to the setState
@@ -44,7 +44,7 @@ class MyAppState extends State<MyApp> {
       themeMode: Settings().themeMode,
       debugShowCheckedModeBanner: false,
       // On charge d'abord la page de bienvenue
-      home: const NavigationMenu(),//WelcomePage(),
+      home: const WelcomePage(),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import '../models/product.dart';
 import 'api.dart';
@@ -84,12 +86,11 @@ class ApiService {
             id: json['id'] as int,
             name: json['name'] as String,
           );
-          for (int i = 0; i < producers.length;i++) {
-          if (producers.length >= i &&
-              producers[i].user.name == "/api/users/${user.id}") {
-            
-            producers[i].user = user;
-          }
+          for (int i = 0; i < producers.length; i++) {
+            if (producers.length >= i &&
+                producers[i].user.name == "/api/users/${user.id}") {
+              producers[i].user = user;
+            }
           }
         }
       }
@@ -117,6 +118,38 @@ class ApiService {
       }
       return users;
     } else {
+      throw response;
+    }
+  }
+
+  Future<List<Product>> getAllProducts() async {
+    print('req start');
+    Response response = await getData("/products", params: {
+      'page': 1,
+    });
+    if (response.statusCode == 200) {
+      print('req success');
+      Map data = response.data;
+
+      List<dynamic> results = data["hydra:member"];
+
+      List<Product> products = [];
+
+      for (Map<String, dynamic> json in results) {
+        // Transformation du JSON en objet Movie
+        Product product = Product(
+          id: json['id'] as int,
+          name: json['name'] as String,
+          description: json['description'] ?? 't' as String,
+          price: json['price'] as double,
+        );
+        products.add(product);
+
+        print(products[2].description);
+      }
+      return products;
+    } else {
+      print(response);
       throw response;
     }
   }

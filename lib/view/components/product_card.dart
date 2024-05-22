@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:new_world_mobile/view/pages/product_page.dart';
+
+class ProductCard extends StatelessWidget {
+  const ProductCard({
+    super.key,
+    required this.cardImg,
+    required this.cardCategory,
+    required this.cardPrice,
+  });
+
+  final String cardImg;
+  final String cardCategory;
+  final double cardPrice;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 400,
+      decoration: BoxDecoration(
+        border: Border.all(width: 2.0), //Border.all
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ), //BorderRadius.all),
+      ),
+      child: Column(
+        children: [
+          Text(cardCategory),
+          const SizedBox(
+            height: 20, // Espace vertical de 20 pixels
+          ),
+          Container(
+            width: 400,
+            child: Image.asset(cardImg, fit: BoxFit.fitWidth),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const Expanded(
+                child: Text('Produit à la une'),
+              ),
+              Expanded(
+                  child: Row(
+                children: [
+                  Text(cardPrice.toString() + '€'),
+                  ElevatedButton(
+                    child: const Text(
+                      'Acheter',
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProductPage(), // Navigue vers la classe MyApp
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              )),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

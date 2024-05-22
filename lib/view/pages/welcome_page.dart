@@ -24,13 +24,13 @@ class WelcomePage extends StatelessWidget {
               ),
               // Première animation retardée pour le logo
               DelayedAnimation(
-                  delay: 1500, // Délai de 1,5 seconde
+                  delay: 1000, // Délai de 1,5 seconde
                   child: Container(
                     child: Image.asset('images/logo.png'), // Affichage du logo
                   )),
               // Deuxième animation retardée pour le texte
               DelayedAnimation(
-                  delay: 2500, // Délai de 2,5 secondes
+                  delay: 2000, // Délai de 2,5 secondes
                   child: Container(
                     height: 100, // Hauteur de 100 pixels
                     child: const Text(
@@ -41,7 +41,7 @@ class WelcomePage extends StatelessWidget {
                   )),
               // Troisième animation retardée pour le bouton
               DelayedAnimation(
-                delay: 3500, // Délai de 3,5 secondes
+                delay: 3000, // Délai de 3,5 secondes
                 child: Container(
                   width: double
                       .infinity, // Largeur du conteneur prend toute la largeur disponible
@@ -51,7 +51,7 @@ class WelcomePage extends StatelessWidget {
                             Colors.white, // Couleur du texte du bouton
                         backgroundColor:
                             Colors.red), // Couleur de fond du bouton
-                    child: Text('Get Started'), // Texte du bouton
+                    child: const Text('Commencer'), // Texte du bouton
                     onPressed: () {
                       Navigator.push(
                         context,

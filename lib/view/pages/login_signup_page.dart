@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:new_world_mobile/main.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import commenté, non utilisé
 import 'package:new_world_mobile/view/components/delayed_animation.dart';
+import 'package:new_world_mobile/view/components/navigation_menu.dart';
+import 'package:new_world_mobile/view/pages/product_page.dart';
 
 /// Création d'une page de connexion/inscription
 class LoginPage extends StatelessWidget {
@@ -27,93 +28,94 @@ class LoginPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-          // Permet de faire défiler le contenu
-          child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 40,
-              horizontal: 30,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment
-                  .start, // Aligne les enfants au début de l'axe horizontal
-              children: [
-                DelayedAnimation(
-                  delay:
-                      1500, // Délai avant l'affichage de cet élément (1500ms)
-                  child: Center(
-                    child: Text(
-                      "Se connecter",
-                      style: GoogleFonts.poppins(
-                        color: Colors.red,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
+        // Permet de faire défiler le contenu
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 40,
+                horizontal: 30,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment
+                    .start, // Aligne les enfants au début de l'axe horizontal
+                children: [
+                  DelayedAnimation(
+                    delay:
+                        500, // Délai avant l'affichage de cet élément (1500ms)
+                    child: Center(
+                      child: Text(
+                        "Se connecter",
+                        style: GoogleFonts.poppins(
+                          color: Colors.red,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 22, // Espacement vertical de 22 pixels
-                ),
-                DelayedAnimation(
-                  delay:
-                      2500, // Délai avant l'affichage de cet élément (2500ms)
-                  child: Center(
-
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      'Veuillez vous connecter pour accéder à votre compte et profiter de tous nos services exclusifs.',
-                      style: GoogleFonts.poppins(
-                        color: Colors.grey[600],
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
+                  const SizedBox(
+                    height: 22, // Espacement vertical de 22 pixels
+                  ),
+                  DelayedAnimation(
+                    delay:
+                        600, // Délai avant l'affichage de cet élément (2500ms)
+                    child: Center(
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        'Veuillez vous connecter pour accéder à votre compte et profiter de tous nos services exclusifs.',
+                        style: GoogleFonts.poppins(
+                          color: Colors.grey[600],
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 35, // Espacement vertical de 35 pixels
-          ),
-          LoginForm(), // Widget du formulaire de connexion
-          SizedBox(
-            height: 125, // Espacement vertical de 125 pixels
-          ),
-          DelayedAnimation(
-            delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red, // Couleur de fond du bouton
-                shape: StadiumBorder(), // Forme du bouton
-                padding: EdgeInsets.symmetric(
-                  horizontal: 125, // Padding horizontal de 125 pixels
-                  vertical: 13, // Padding vertical de 13 pixels
-                ),
-              ),
-              child: Text(
-                'CONFIRMER',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        MyApp(), // Navigue vers la classe MyApp
+            SizedBox(
+              height: 35, // Espacement vertical de 35 pixels
+            ),
+            LoginForm(), // Widget du formulaire de connexion
+            SizedBox(
+              height: 125, // Espacement vertical de 125 pixels
+            ),
+            DelayedAnimation(
+              delay: 1000, // Délai avant l'affichage de cet élément (5500ms)
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // Couleur de fond du bouton
+                  shape: StadiumBorder(), // Forme du bouton
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 125, // Padding horizontal de 125 pixels
+                    vertical: 13, // Padding vertical de 13 pixels
                   ),
-                );
-              },
+                ),
+                child: Text(
+                  'CONFIRMER',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ProductPage(), // Navigue vers la page des produits
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
+      bottomNavigationBar: NavigationMenu(),
     );
   }
 }
@@ -134,7 +136,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
+            delay: 800, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
               decoration: InputDecoration(
                 labelText: "Votre Email", // Label du champ de texte
@@ -148,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
             height: 30, // Espacement vertical de 30 pixels
           ),
           DelayedAnimation(
-            delay: 4500, // Délai avant l'affichage de cet élément (4500ms)
+            delay: 900, // Délai avant l'affichage de cet élément (4500ms)
             child: TextField(
               obscureText: _obsureText, // Gère la visibilité du texte
               decoration: InputDecoration(
