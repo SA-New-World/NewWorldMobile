@@ -1,7 +1,7 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:dio/dio.dart';
-import '../models/product.dart';
+import '../../models/product.dart';
 import 'api.dart';
 
 /// Classe `ApiService` gère les requêtes réseau pour récupérer des données de films depuis une API externe.

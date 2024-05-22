@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/components/product_card.dart';
 import '../../models/product.dart';
-import '../../services/api_service.dart';
+import '../../services/api/api_service.dart';
 
 // ignore: must_be_immutable
 class ProductPage extends StatelessWidget {
