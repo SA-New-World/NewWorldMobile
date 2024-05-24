@@ -1,51 +1,9 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_world_mobile/view/pages/cart_page.dart';
 import 'package:new_world_mobile/view/pages/info_page.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
-
 import 'package:new_world_mobile/view/pages/settings_page.dart';
-
-// ignore: must_be_immutable
-class NavigationMenu extends StatelessWidget {
-  const NavigationMenu({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // On crée une instance de NavigationController, la stocke dans une variable finale nommée controller,
-    // et on enregistre cette instance dans le système de dépendances de GetX pour une utilisation ultérieure.
-    final controller = Get.put(NavigationController());
-
-    // structure visuelle de base avec des éléments standards comme AppBar, body, et FloatingActionButton
-    return Scaffold(
-      // La propriété bottomNavigationBar de Scaffold permet d'ajouter une barre de navigation
-      // en bas de l'écran, ici spécifiquement en utilisant le widget NavigationBar.
-      bottomNavigationBar: NavigationBar(
-        // On fixe la hauteur du widget à 80
-        height: 80,
-        // On lui enlève son effet de levitation
-        elevation: 0,
-        // La propriété selectedIndex: 0 indique que le premier élément est actuellement sélectionné
-        // dans un widget de navigation comme une barre de navigation.
-        selectedIndex: 0,
-        // Callback déclenchée lorsque l'utilisateur sélectionne une destination de navigation, mettant à jour l'index sélectionné dans le contrôleur
-        onDestinationSelected: (index) =>
-            controller.selectedIndex.value = index,
-// Liste de destinations de navigation avec des icônes et des libellés correspondants
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Accueil'),
-          NavigationDestination(icon: Icon(Icons.storefront), label: 'Panier'),
-          NavigationDestination(icon: Icon(Icons.favorite), label: 'Favories'),
-          NavigationDestination(icon: Icon(Icons.face), label: 'Profil'),
-        ],
-      ),
-      // La propriété body de Scaffold utilise un widget Obx pour mettre à jour dynamiquement
-      // le contenu affiché en fonction de la valeur actuelle de selectedIndex du contrôleur,
-      // en affichant le contenu de l'index correspondant dans la liste screens du contrôleur.
-      body: Obx(() => controller.screens[controller.selectedIndex.value]),
-    );
-  }
-}
 
 class NavigationController extends GetxController {
   // Déclaration de la variable réactive selectedIndex initialisée à 0
@@ -65,4 +23,53 @@ class NavigationController extends GetxController {
     // Page d'informations (constante car n'a pas besoin de changement dynamique pour l'instant)
     const InfoPage(),
   ];
+}
+
+class NavigationMenu extends StatelessWidget {
+  const NavigationMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // On crée une instance de NavigationController
+    final controller = Get.put(NavigationController());
+
+    return Scaffold(
+      // Ajout de la barre de navigation en bas de l'écran
+      bottomNavigationBar: Obx(() => NavigationBar(
+            height: 80,
+            elevation: 0,
+            selectedIndex: controller.selectedIndex.value,
+            onDestinationSelected: (index) =>
+                controller.selectedIndex.value = index,
+            destinations: const [
+              NavigationDestination(icon: Icon(Icons.home), label: 'Accueil'),
+              NavigationDestination(
+                  icon: Icon(Icons.storefront), label: 'Panier'),
+              NavigationDestination(
+                  icon: Icon(Icons.favorite), label: 'Favories'),
+              NavigationDestination(icon: Icon(Icons.face), label: 'Profil'),
+            ],
+          )),
+      // Mise à jour dynamique du contenu affiché
+      body: Obx(() => controller.screens[controller.selectedIndex.value]),
+    );
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'New World Mobile',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home:
+          const NavigationMenu(), // Utilisation de NavigationMenu comme page d'accueil
+    );
+  }
 }

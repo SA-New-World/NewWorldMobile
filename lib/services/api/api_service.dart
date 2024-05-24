@@ -123,34 +123,43 @@ class ApiService {
   }
 
   Future<List<Product>> getAllProducts() async {
-    print('req start');
-    Response response = await getData("/products", params: {
-      'page': 1,
-    });
-    if (response.statusCode == 200) {
-      print('req success');
-      Map data = response.data;
+    int page = 1;
+    List<Product> allProducts = [];
+    bool hasMorePages = true;
 
-      List<dynamic> results = data["hydra:member"];
+    while (hasMorePages) {
+      try {
+        // Effectuer une requête avec le paramètre de pagination
+        Response response = await getData("/products", params: {
+          'page': page,
+        });
+        Map data = response.data;
+        List<dynamic> results = data["hydra:member"];
 
-      List<Product> products = [];
+        // print('Page $page: récupéré ${results.length} produits');
 
-      for (Map<String, dynamic> json in results) {
-        // Transformation du JSON en objet Movie
-        Product product = Product(
-          id: json['id'] as int,
-          name: json['name'] as String,
-          description: json['description'] ?? 't' as String,
-          price: json['price'] as double,
-        );
-        products.add(product);
-
-        print(products[2].description);
+        // Si la réponse ne contient pas de produits, on arrête la boucle
+        if (results.isEmpty) {
+          hasMorePages = false;
+        } else {
+          // Transformation des résultats JSON en objets Product
+          for (Map<String, dynamic> json in results) {
+            Product product = Product(
+              id: json['id'],
+              name: json['name'],
+              description: json['description'],
+              price: json['price'],
+            );
+            allProducts.add(product);
+          }
+          // Passer à la page suivante
+          page++;
+        }
+      } catch (e) {
+        // print('Erreur lors de la récupération des produits : $e');
+        hasMorePages = false; // Arrêter la boucle en cas d'erreur
       }
-      return products;
-    } else {
-      print(response);
-      throw response;
     }
+    return allProducts;
   }
 }

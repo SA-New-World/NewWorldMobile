@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_world_mobile/view/components/navigation_menu.dart';
-// import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/components/product_card.dart';
 import '../../models/product.dart';
 import '../../services/api/api_service.dart';
@@ -21,66 +19,26 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: setProducer(),
-      builder: (context, AsyncSnapshot snapchot) {
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text(
-                  'Nom de la Catégorie',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  height: 30, // Espace vertical de 100 pixels
-                ),
-                ProductCard(
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return ListView.builder(
+            itemCount: card.length,
+            itemBuilder: (context, index) {
+              return Card(
+                color: Colors.grey,
+                child: ProductCard(
+                  cardCategory: card[index].name,
                   cardImg: 'images/FirstProduct.jpg',
-                  cardCategory: 'Vêtements',
-                  cardPrice: 35,
+                  cardPrice: card[index].price,
                 ),
-                SizedBox(
-                  height: 100, // Espace vertical de 100 pixels
-                ),
-                ProductCard(
-                  cardImg: 'images/FirstProduct.jpg',
-                  cardCategory: 'Vêtements',
-                  cardPrice: 35,
-                ),
-                SizedBox(
-                  height: 100, // Espace vertical de 100 pixels
-                ),
-                ProductCard(
-                  cardImg: 'images/FirstProduct.jpg',
-                  cardCategory: 'Vêtements',
-                  cardPrice: 35,
-                ),
-                SizedBox(
-                  height: 100, // Espace vertical de 100 pixels
-                ),
-                ProductCard(
-                  cardImg: 'images/FirstProduct.jpg',
-                  cardCategory: 'Vêtements',
-                  cardPrice: 35,
-                ),
-              ],
-            ),
-          ),
-          // bottomNavigationBar: NavigationMenu(),
-
-          //     ListView.builder(
-          //   itemCount: card.length,
-          //   itemBuilder: (context, index) {
-          //     return Card(
-          //       color: Colors.blue,
-          //       child: ProductCard(
-          //         cardCategory: card[index].name,
-          //         cardImg: 'images/FirstProduct.jpg',
-          //         cardPrice: card[index].price,
-          //       ),
-          //     );
-          //   },
-          // ),
-        );
+              );
+            },
+          );
+        }
       },
     );
   }

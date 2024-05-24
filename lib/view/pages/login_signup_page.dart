@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:new_world_mobile/main.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import commenté, non utilisé
 import 'package:new_world_mobile/view/components/delayed_animation.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
-import 'package:new_world_mobile/view/pages/product_page.dart';
 
 /// Création d'une page de connexion/inscription
 class LoginPage extends StatelessWidget {
@@ -102,7 +100,8 @@ class LoginPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          ProductPage(), // Navigue vers la classe MyApp
+                          const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                      // afficher les autres pages
                     ),
                   );
                 },

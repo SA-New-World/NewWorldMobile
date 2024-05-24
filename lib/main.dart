@@ -52,6 +52,7 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       // On charge d'abord la page de bienvenue
       home: const WelcomePage(),
+      
     );
   }
 }
