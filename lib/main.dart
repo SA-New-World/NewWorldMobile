@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-// import 'package:new_world_mobile/view/components/navigation_menu.dart';
-// import 'package:new_world_mobile/view/components/navigation_menu.dart';
-// import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/pages/welcome_page.dart';
+import 'package:new_world_mobile/services/settings/settings.dart';
 
-import 'services/settings/settings.dart';
 
 void main() async {
+  // Assurez-vous que la liaison des widgets de Flutter est initialisée
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialiser les paramètres ou d'autres services
   await Settings().init();
-  runApp(const MyApp());
+
+  // Démarrer l'application
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -52,7 +55,6 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       // On charge d'abord la page de bienvenue
       home: const WelcomePage(),
-      
     );
   }
 }

@@ -10,6 +10,7 @@ class Settings with ChangeNotifier {
   // Instance unique privée de UserPreferences pour le modèle Singleton.
   static final Settings _instance = Settings._internal();
 
+
   // Factory constructor retournant l'instance unique.
   factory Settings() {
     return _instance;

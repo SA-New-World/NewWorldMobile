@@ -3,10 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import commenté, non utilisé
 import 'package:new_world_mobile/view/components/delayed_animation.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
+import 'package:new_world_mobile/view/pages/login_page.dart';
 
 /// Création d'une page de connexion/inscription
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatelessWidget {
+  const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +38,16 @@ class LoginPage extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment
-                    .start, // Aligne les enfants au début de l'axe horizontal
+                    .center, // Aligne les enfants au début de l'axe horizontal
                 children: [
                   DelayedAnimation(
                     delay:
                         1500, // Délai avant l'affichage de cet élément (1500ms)
                     child: Text(
-                      "Connect email adress",
+                      "Inscription",
                       style: GoogleFonts.poppins(
                         color: Colors.red,
-                        fontSize: 25,
+                        fontSize: 35,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -58,12 +59,12 @@ class LoginPage extends StatelessWidget {
                     delay:
                         2500, // Délai avant l'affichage de cet élément (2500ms)
                     child: Text(
-                      'Mettre un texte là',
+                      "Parce que tout commence ici, n'hésitez pas et inscrivez-vous.",
                       style: GoogleFonts.poppins(
                         color: Colors.grey[600],
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                      ),
+                      ),textAlign: TextAlign.center,
                     ),
                   ),
                 ],
@@ -72,9 +73,36 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            LoginForm(), // Widget du formulaire de connexion
+            SignupForm(), // Widget du formulaire d'inscription
+            DelayedAnimation(
+              delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // Couleur de fond du bouton
+
+                ),
+                child: Text(
+                  "Se connecter",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          LoginPage(), // Navigue vers la bottomBar qui vas servir à
+                      // afficher les autres pages
+                    ),
+                  );
+                },
+              ),
+            ),
             SizedBox(
-              height: 125, // Espacement vertical de 125 pixels
+              height: 50, // Espacement vertical de 125 pixels
             ),
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
@@ -88,7 +116,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'CONFIRM',
+                  'CONFIRMER',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 15,
@@ -114,12 +142,12 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
+class SignupForm extends StatefulWidget {
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _SignupFormState createState() => _SignupFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignupFormState extends State<SignupForm> {
   var _obsureText = true; // Variable pour gérer la visibilité du mot de passe
   @override
   Widget build(BuildContext context) {
@@ -133,7 +161,21 @@ class _LoginFormState extends State<LoginForm> {
             delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
               decoration: InputDecoration(
-                labelText: "Your Email", // Label du champ de texte
+                labelText: "Votre nom", // Label du champ de texte
+                labelStyle: TextStyle(
+                  color: Colors.grey[400], // Couleur du label
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 30, // Espacement vertical de 30 pixels
+          ),
+          DelayedAnimation(
+            delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: "Votre email", // Label du champ de texte
                 labelStyle: TextStyle(
                   color: Colors.grey[400], // Couleur du label
                 ),
@@ -152,7 +194,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.grey[400], // Couleur du label
                 ),
                 labelText:
-                    'Password', // Label du champ de texte pour le mot de passe
+                    'Votre mot de passe', // Label du champ de texte pour le mot de passe
                 suffixIcon: IconButton(
                   icon: Icon(Icons.visibility,
                       color: Colors

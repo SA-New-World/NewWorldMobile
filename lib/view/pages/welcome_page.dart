@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart'; // Importation de Flutter Material Design
 import 'package:new_world_mobile/view/components/delayed_animation.dart'; // Importation du widget DelayedAnimation
 // import 'package:new_world_mobile/view/pages/info_page.dart';
-import 'package:new_world_mobile/view/pages/login_signup_page.dart'; // Importation de la page InfoPage
+import 'package:new_world_mobile/view/pages/login_page.dart'; // Importation de la page InfoPage
 
 // Définition d'un StatelessWidget nommé WelcomePage
 class WelcomePage extends StatelessWidget {
@@ -20,21 +20,24 @@ class WelcomePage extends StatelessWidget {
             // Column pour disposer les widgets verticalement
             children: [
               const SizedBox(
-                height: 150, // Espace vertical de 150 pixels
+                height: 50, // Espace vertical de 150 pixels
               ),
               // Première animation retardée pour le logo
               DelayedAnimation(
                   delay: 1000, // Délai de 1,5 seconde
                   child: Container(
-                    child: Image.asset('images/logo.png'), // Affichage du logo
-                  )),
+                    child: Image.asset(
+                        'images/logo.png'
+                      ),
+                    )//Image.asset('images/logo.png'), // Affichage du logo
+                  ),
               // Deuxième animation retardée pour le texte
               DelayedAnimation(
                   delay: 2000, // Délai de 2,5 secondes
                   child: Container(
                     height: 100, // Hauteur de 100 pixels
                     child: const Text(
-                      "Une entreprise à vos côtés", // Texte affiché
+                      "Une entreprise à vos côtés", style: TextStyle(fontSize: 25), // Texte affiché
                       textAlign:
                           TextAlign.center, // Alignement du texte au centre
                     ),
@@ -51,7 +54,7 @@ class WelcomePage extends StatelessWidget {
                             Colors.white, // Couleur du texte du bouton
                         backgroundColor:
                             Colors.red), // Couleur de fond du bouton
-                    child: const Text('Commencer'), // Texte du bouton
+                    child: const Text('Commencer', style: TextStyle(fontSize: 20),), // Texte du bouton
                     onPressed: () {
                       Navigator.push(
                         context,

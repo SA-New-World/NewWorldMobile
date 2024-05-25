@@ -63,13 +63,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       title: 'New World Mobile',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home:
-          const NavigationMenu(), // Utilisation de NavigationMenu comme page d'accueil
+          NavigationMenu(), // Utilisation de NavigationMenu comme page d'accueil
     );
   }
 }

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     required this.cardImg,
-    required this.cardCategory,
+    required this.cardName,
     required this.cardPrice,
   });
 
   final String cardImg;
-  final String cardCategory;
+  final String cardName;
   final double cardPrice;
 
   @override
@@ -26,7 +27,13 @@ class ProductCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(cardCategory),
+          Text(
+            cardName,
+            style: GoogleFonts.poppins(
+              fontSize: 25,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(
             height: 20, // Espace vertical de 20 pixels
           ),
@@ -38,8 +45,19 @@ class ProductCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             children: [
-              const Expanded(
-                child: Text('Produit à la une'),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProductPage(), // Navigue vers la classe MyApp
+                      ),
+                    );
+                  },
+                  child: Text('En savoir plus'),
+                ),
               ),
               Expanded(
                   child: Row(
