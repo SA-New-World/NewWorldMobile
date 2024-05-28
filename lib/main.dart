@@ -11,7 +11,7 @@ void main() async {
   await Settings().init();
 
   // Démarrer l'application
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {

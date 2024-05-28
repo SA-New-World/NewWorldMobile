@@ -41,12 +41,11 @@ class ProductPage extends StatelessWidget {
             itemBuilder: (context, index) {
               // Construit chaque élément de la liste (une carte de produit)
               return Card(
-                color: Colors.grey, // Couleur de fond de la carte
                 child: ProductCard(
                   // Les données à afficher sur la carte de produit
                   cardName: card[index].name, // Nom du produit
                   cardPrice: card[index].price, // Prix du produit
-                  cardImg: 'images/firstProduct.jpg', // Image du produit (fixe ici)
+                  cardImg: 'images/${card[index].name}.jpg', // Image du produit (fixe ici)
                 ),
               );
             },

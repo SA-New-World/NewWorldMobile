@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,7 +20,7 @@ class ProductCard extends StatelessWidget {
       width: 400,
       decoration: BoxDecoration(
         border: Border.all(width: 2.0), //Border.all
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ), //BorderRadius.all),
       ),
@@ -37,7 +36,7 @@ class ProductCard extends StatelessWidget {
           const SizedBox(
             height: 20, // Espace vertical de 20 pixels
           ),
-          Container(
+          SizedBox(
             width: 400,
             child: Image.asset(cardImg, fit: BoxFit.fitWidth),
           ),
@@ -56,13 +55,13 @@ class ProductCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('En savoir plus'),
+                  child: const Text('En savoir plus'),
                 ),
               ),
               Expanded(
                   child: Row(
                 children: [
-                  Text(cardPrice.toString() + '€'),
+                  Text('$cardPrice€'),
                   ElevatedButton(
                     child: const Text(
                       'Acheter',

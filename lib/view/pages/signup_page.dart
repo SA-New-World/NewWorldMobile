@@ -61,7 +61,7 @@ class SignupPage extends StatelessWidget {
                     child: Text(
                       "Parce que tout commence ici, n'hésitez pas et inscrivez-vous.",
                       style: GoogleFonts.poppins(
-                        color: Colors.grey[600],
+                        color: Colors.grey[800],
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),textAlign: TextAlign.center,
@@ -70,10 +70,10 @@ class SignupPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            SignupForm(), // Widget du formulaire d'inscription
+            const SignupForm(), // Widget du formulaire d'inscription
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
@@ -94,14 +94,14 @@ class SignupPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          LoginPage(), // Navigue vers la bottomBar qui vas servir à
+                          const LoginPage(), // Navigue vers la bottomBar qui vas servir à
                       // afficher les autres pages
                     ),
                   );
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50, // Espacement vertical de 125 pixels
             ),
             DelayedAnimation(
@@ -109,8 +109,8 @@ class SignupPage extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red, // Couleur de fond du bouton
-                  shape: StadiumBorder(), // Forme du bouton
-                  padding: EdgeInsets.symmetric(
+                  shape: const StadiumBorder(), // Forme du bouton
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 125, // Padding horizontal de 125 pixels
                     vertical: 13, // Padding vertical de 13 pixels
                   ),
@@ -143,6 +143,8 @@ class SignupPage extends StatelessWidget {
 }
 
 class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
+
   @override
   _SignupFormState createState() => _SignupFormState();
 }
@@ -152,7 +154,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         horizontal: 30, // Marge horizontale de 30 pixels
       ),
       child: Column(
@@ -163,12 +165,12 @@ class _SignupFormState extends State<SignupForm> {
               decoration: InputDecoration(
                 labelText: "Votre nom", // Label du champ de texte
                 labelStyle: TextStyle(
-                  color: Colors.grey[400], // Couleur du label
+                  color: Colors.grey[600], // Couleur du label
                 ),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30, // Espacement vertical de 30 pixels
           ),
           DelayedAnimation(
@@ -177,12 +179,12 @@ class _SignupFormState extends State<SignupForm> {
               decoration: InputDecoration(
                 labelText: "Votre email", // Label du champ de texte
                 labelStyle: TextStyle(
-                  color: Colors.grey[400], // Couleur du label
+                  color: Colors.grey[600], // Couleur du label
                 ),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30, // Espacement vertical de 30 pixels
           ),
           DelayedAnimation(
@@ -191,12 +193,12 @@ class _SignupFormState extends State<SignupForm> {
               obscureText: _obsureText, // Gère la visibilité du texte
               decoration: InputDecoration(
                 labelStyle: TextStyle(
-                  color: Colors.grey[400], // Couleur du label
+                  color: Colors.grey[600], // Couleur du label
                 ),
                 labelText:
                     'Votre mot de passe', // Label du champ de texte pour le mot de passe
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.visibility,
+                  icon: const Icon(Icons.visibility,
                       color: Colors
                           .black), // Icône pour montrer/cacher le mot de passe
                   onPressed: () {

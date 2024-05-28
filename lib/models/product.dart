@@ -1,5 +1,7 @@
 // import 'dart:ffi';
 
+import 'dart:ffi';
+
 /// Classe `Movie` représente un modèle pour les données de film.
 ///
 /// Cette classe fournit une structure pour stocker les informations essentielles d'un film,

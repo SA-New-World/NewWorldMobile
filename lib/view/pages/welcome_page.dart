@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart'; // Importation de Flutter Material Design
 import 'package:new_world_mobile/view/components/delayed_animation.dart'; // Importation du widget DelayedAnimation
 // import 'package:new_world_mobile/view/pages/info_page.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_world_mobile/view/pages/login_page.dart'; // Importation de la page InfoPage
 
 // Définition d'un StatelessWidget nommé WelcomePage
@@ -26,18 +27,20 @@ class WelcomePage extends StatelessWidget {
               DelayedAnimation(
                   delay: 1000, // Délai de 1,5 seconde
                   child: Container(
-                    child: Image.asset(
-                        'images/logo.png'
-                      ),
-                    )//Image.asset('images/logo.png'), // Affichage du logo
+                    child: Image.asset('images/logo.png'),
+                  ) //Image.asset('images/logo.png'), // Affichage du logo
                   ),
               // Deuxième animation retardée pour le texte
               DelayedAnimation(
                   delay: 2000, // Délai de 2,5 secondes
-                  child: Container(
+                  child: SizedBox(
                     height: 100, // Hauteur de 100 pixels
-                    child: const Text(
-                      "Une entreprise à vos côtés", style: TextStyle(fontSize: 25), // Texte affiché
+                    child: Text(
+                      "Une entreprise à vos côtés",
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                       textAlign:
                           TextAlign.center, // Alignement du texte au centre
                     ),
@@ -45,7 +48,7 @@ class WelcomePage extends StatelessWidget {
               // Troisième animation retardée pour le bouton
               DelayedAnimation(
                 delay: 3000, // Délai de 3,5 secondes
-                child: Container(
+                child: SizedBox(
                   width: double
                       .infinity, // Largeur du conteneur prend toute la largeur disponible
                   child: ElevatedButton(
@@ -54,7 +57,10 @@ class WelcomePage extends StatelessWidget {
                             Colors.white, // Couleur du texte du bouton
                         backgroundColor:
                             Colors.red), // Couleur de fond du bouton
-                    child: const Text('Commencer', style: TextStyle(fontSize: 20),), // Texte du bouton
+                    child: const Text(
+                      'Commencer',
+                      style: TextStyle(fontSize: 20),
+                    ), // Texte du bouton
                     onPressed: () {
                       Navigator.push(
                         context,
