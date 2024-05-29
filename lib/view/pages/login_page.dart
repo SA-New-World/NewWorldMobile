@@ -5,9 +5,22 @@ import 'package:new_world_mobile/view/components/delayed_animation.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/pages/signup_page.dart';
 
+import '../../services/api/api_service.dart';
+
+Future<void> canLogUser({required String mail, required String password, required Function onLog}) async {
+  ApiService service = ApiService();
+  String response = await service.logUser(mail, password);
+  print(response);
+  if (response == 'user logged') {
+    onLog();
+  }
+}
+
 /// Création d'une page de connexion/inscription
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  TextEditingController mailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +87,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            const LoginForm(), // Widget du formulaire de connexion
+            LoginForm(mailController: mailController, passwordController: passwordController), // Widget du formulaire de connexion
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
@@ -124,13 +137,17 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
-                      // afficher les autres pages
-                    ),
+                  canLogUser(mail: mailController.text, password: passwordController.text,
+                    onLog: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                          // afficher les autres pages
+                        ),
+                      );
+                    }
                   );
                 },
               ),
@@ -143,7 +160,9 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  LoginForm({super.key, required this.mailController, required this.passwordController});
+  TextEditingController mailController;
+  TextEditingController passwordController;
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -162,6 +181,7 @@ class _LoginFormState extends State<LoginForm> {
           DelayedAnimation(
             delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
+              controller: widget.mailController,
               decoration: InputDecoration(
                 labelText: "Votre email", // Label du champ de texte
                 labelStyle: TextStyle(
@@ -176,6 +196,7 @@ class _LoginFormState extends State<LoginForm> {
           DelayedAnimation(
             delay: 4500, // Délai avant l'affichage de cet élément (4500ms)
             child: TextField(
+              controller: widget.passwordController,
               obscureText: _obsureText, // Gère la visibilité du texte
               decoration: InputDecoration(
                 labelStyle: TextStyle(

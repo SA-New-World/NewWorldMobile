@@ -66,7 +66,7 @@ class WelcomePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const LoginPage() // Navigation vers InfoPage lorsqu'on appuie sur le bouton
+                              LoginPage() // Navigation vers InfoPage lorsqu'on appuie sur le bouton
                             ),
                       );
                     },

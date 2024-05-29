@@ -47,6 +47,27 @@ class ApiService {
     }
   }
 
+  Future<String> logUser(String name, String pass) async {
+    Response response = await getData("/request", params: {
+      'token': api.apikey,
+      'email': name,
+      'password': pass
+    });
+    if (response.statusCode == 200) {
+      //print(response.data);
+      //print(response.data == 'success');
+      if (response.data == 'success') {
+        return 'user logged';
+      }
+      else {
+        return 'loging fail';
+      }
+    }
+    else {
+      throw response;
+    }
+  }
+
   /// Récupère une liste des films populaires à partir de l'API.
   ///
   /// [pageNumber] Le numéro de la page à récupérer pour la pagination des résultats.

@@ -94,7 +94,7 @@ class SignupPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          const LoginPage(), // Navigue vers la bottomBar qui vas servir à
+                        LoginPage(), // Navigue vers la bottomBar qui vas servir à
                       // afficher les autres pages
                     ),
                   );

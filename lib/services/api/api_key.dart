@@ -16,5 +16,5 @@
 /// - Assurez-vous que votre clé API n'est pas exposée dans des endroits accessibles au public.
 class APIKey {
   /// Clé API pour l'accès aux services du site themoviedb.org.
-  static String apikey = 'votre clé API ici';
+  static String apikey = 'mytoken';
 }
