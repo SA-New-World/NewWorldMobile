@@ -47,10 +47,11 @@ class ApiService {
     }
   }
 
-  Future<String> logUser(String name, String pass) async {
+  Future<String> logUser(String mail, String pass) async {
     Response response = await getData("/request", params: {
+      'for': 'login',
       'token': api.apikey,
-      'email': name,
+      'email': mail,
       'password': pass
     });
     if (response.statusCode == 200) {
@@ -61,6 +62,32 @@ class ApiService {
       }
       else {
         return 'loging fail';
+      }
+    }
+    else {
+      throw response;
+    }
+  }
+
+  Future<String> registerUser(String name, String mail, String pass) async {
+    Response response = await getData("/request", params: {
+      'for': 'register',
+      'token': api.apikey,
+      'name' : name,
+      'email': mail,
+      'password': pass
+    });
+    if (response.statusCode == 200) {
+      //print(response.data);
+      //print(response.data == 'success');
+      if (response.data == 'success') {
+        return 'user created';
+      }
+      else if (response.data == 'invalidemail') {
+        return 'email not available';
+      }
+      else {
+        return 'register fail';
       }
     }
     else {

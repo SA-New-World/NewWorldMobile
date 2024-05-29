@@ -7,9 +7,9 @@ import 'package:new_world_mobile/view/pages/signup_page.dart';
 
 import '../../services/api/api_service.dart';
 
-Future<void> canLogUser({required String mail, required String password, required Function onLog}) async {
+Future<void> canLogUser({required String email, required String password, required Function onLog}) async {
   ApiService service = ApiService();
-  String response = await service.logUser(mail, password);
+  String response = await service.logUser(email, password);
   print(response);
   if (response == 'user logged') {
     onLog();
@@ -20,7 +20,7 @@ Future<void> canLogUser({required String mail, required String password, require
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   TextEditingController mailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            LoginForm(mailController: mailController, passwordController: passwordController), // Widget du formulaire de connexion
+            LoginForm(mailController: mailController, passController: passController), // Widget du formulaire de connexion
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
@@ -107,7 +107,7 @@ class LoginPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          const SignupPage(), // Navigue vers la bottomBar qui vas servir à
+                        SignupPage(), // Navigue vers la bottomBar qui vas servir à
                       // afficher les autres pages
                     ),
                   );
@@ -137,7 +137,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  canLogUser(mail: mailController.text, password: passwordController.text,
+                  canLogUser(email: mailController.text, password: passController.text,
                     onLog: () {
                       Navigator.push(
                         context,
@@ -160,9 +160,9 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  LoginForm({super.key, required this.mailController, required this.passwordController});
+  LoginForm({super.key, required this.mailController, required this.passController});
   TextEditingController mailController;
-  TextEditingController passwordController;
+  TextEditingController passController;
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -196,7 +196,7 @@ class _LoginFormState extends State<LoginForm> {
           DelayedAnimation(
             delay: 4500, // Délai avant l'affichage de cet élément (4500ms)
             child: TextField(
-              controller: widget.passwordController,
+              controller: widget.passController,
               obscureText: _obsureText, // Gère la visibilité du texte
               decoration: InputDecoration(
                 labelStyle: TextStyle(

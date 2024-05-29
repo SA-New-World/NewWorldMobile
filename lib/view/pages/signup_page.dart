@@ -5,9 +5,23 @@ import 'package:new_world_mobile/view/components/delayed_animation.dart';
 import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/pages/login_page.dart';
 
+import '../../services/api/api_service.dart';
+
+Future<void> canRegisterUser({required String name, required String email, required String password, required Function onLog}) async {
+  ApiService service = ApiService();
+  String response = await service.registerUser(name, email, password);
+  print(response);
+  if (response == 'user created') {
+    onLog();
+  }
+}
+
 /// Création d'une page de connexion/inscription
 class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+  SignupPage({super.key});
+  TextEditingController nameController = TextEditingController();
+  TextEditingController mailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +87,7 @@ class SignupPage extends StatelessWidget {
             const SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            const SignupForm(), // Widget du formulaire d'inscription
+            SignupForm(nameController: nameController, mailController: mailController, passController: passController), // Widget du formulaire d'inscription
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
@@ -124,13 +138,17 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
-                      // afficher les autres pages
-                    ),
+                  canRegisterUser(name: nameController.text, email: mailController.text, password: passController.text,
+                    onLog: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                          // afficher les autres pages
+                        ),
+                      );
+                    }
                   );
                 },
               ),
@@ -143,7 +161,10 @@ class SignupPage extends StatelessWidget {
 }
 
 class SignupForm extends StatefulWidget {
-  const SignupForm({super.key});
+  SignupForm({super.key, required this.nameController, required this.mailController, required this.passController});
+  TextEditingController nameController;
+  TextEditingController mailController;
+  TextEditingController passController;
 
   @override
   _SignupFormState createState() => _SignupFormState();
@@ -162,6 +183,7 @@ class _SignupFormState extends State<SignupForm> {
           DelayedAnimation(
             delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
+              controller: widget.nameController,
               decoration: InputDecoration(
                 labelText: "Votre nom", // Label du champ de texte
                 labelStyle: TextStyle(
@@ -176,6 +198,7 @@ class _SignupFormState extends State<SignupForm> {
           DelayedAnimation(
             delay: 3500, // Délai avant l'affichage de cet élément (3500ms)
             child: TextField(
+              controller: widget.mailController,
               decoration: InputDecoration(
                 labelText: "Votre email", // Label du champ de texte
                 labelStyle: TextStyle(
@@ -190,6 +213,7 @@ class _SignupFormState extends State<SignupForm> {
           DelayedAnimation(
             delay: 4500, // Délai avant l'affichage de cet élément (4500ms)
             child: TextField(
+              controller: widget.passController,
               obscureText: _obsureText, // Gère la visibilité du texte
               decoration: InputDecoration(
                 labelStyle: TextStyle(
