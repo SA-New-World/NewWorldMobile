@@ -136,8 +136,6 @@ class ApiService {
         Map data = response.data;
         List<dynamic> results = data["hydra:member"];
 
-        print('Page $page: récupéré ${results.length} produits');
-
         // Si la réponse ne contient pas de produits, on arrête la boucle
         if (results.isEmpty) {
           hasMorePages = false;
@@ -148,7 +146,7 @@ class ApiService {
               id: json['id'],
               name: json['name'],
               description: json['description'],
-              price: json['price'],
+              price: json['price'].toDouble(),
             );
             allProducts.add(product);
           }
@@ -156,7 +154,6 @@ class ApiService {
           page++;
         }
       } catch (e) {
-         print('Erreur lors de la récupération des produits : $e');
         hasMorePages = false; // Arrêter la boucle en cas d'erreur
       }
     }
