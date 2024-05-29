@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_world_mobile/models/product.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,11 +9,13 @@ class ProductCard extends StatelessWidget {
     required this.cardImg,
     required this.cardName,
     required this.cardPrice,
+    required this.products,
   });
 
   final String cardImg;
   final String cardName;
   final double cardPrice;
+  final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
