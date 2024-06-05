@@ -7,7 +7,11 @@ import 'package:new_world_mobile/view/pages/login_page.dart';
 
 import '../../services/api/api_service.dart';
 
-Future<void> canRegisterUser({required String name, required String email, required String password, required Function onLog}) async {
+Future<void> canRegisterUser(
+    {required String name,
+    required String email,
+    required String password,
+    required Function onLog}) async {
   ApiService service = ApiService();
   String response = await service.registerUser(name, email, password);
   print(response);
@@ -17,6 +21,7 @@ Future<void> canRegisterUser({required String name, required String email, requi
 }
 
 /// Création d'une page de connexion/inscription
+// ignore: must_be_immutable
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
   TextEditingController nameController = TextEditingController();
@@ -78,7 +83,8 @@ class SignupPage extends StatelessWidget {
                         color: Colors.grey[800],
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                      ),textAlign: TextAlign.center,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
@@ -87,13 +93,16 @@ class SignupPage extends StatelessWidget {
             const SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            SignupForm(nameController: nameController, mailController: mailController, passController: passController), // Widget du formulaire d'inscription
+            SignupForm(
+                nameController: nameController,
+                mailController: mailController,
+                passController:
+                    passController), // Widget du formulaire d'inscription
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red, // Couleur de fond du bouton
-
                 ),
                 child: Text(
                   "Se connecter",
@@ -108,7 +117,7 @@ class SignupPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                        LoginPage(), // Navigue vers la bottomBar qui vas servir à
+                          LoginPage(), // Navigue vers la bottomBar qui vas servir à
                       // afficher les autres pages
                     ),
                   );
@@ -138,18 +147,20 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  canRegisterUser(name: nameController.text, email: mailController.text, password: passController.text,
-                    onLog: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
-                          // afficher les autres pages
-                        ),
-                      );
-                    }
-                  );
+                  canRegisterUser(
+                      name: nameController.text,
+                      email: mailController.text,
+                      password: passController.text,
+                      onLog: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                            // afficher les autres pages
+                          ),
+                        );
+                      });
                 },
               ),
             ),
@@ -160,8 +171,13 @@ class SignupPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class SignupForm extends StatefulWidget {
-  SignupForm({super.key, required this.nameController, required this.mailController, required this.passController});
+  SignupForm(
+      {super.key,
+      required this.nameController,
+      required this.mailController,
+      required this.passController});
   TextEditingController nameController;
   TextEditingController mailController;
   TextEditingController passController;

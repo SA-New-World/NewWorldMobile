@@ -7,16 +7,19 @@ import 'package:new_world_mobile/view/pages/signup_page.dart';
 
 import '../../services/api/api_service.dart';
 
-Future<void> canLogUser({required String email, required String password, required Function onLog}) async {
+Future<void> canLogUser(
+    {required String email,
+    required String password,
+    required Function onLog}) async {
   ApiService service = ApiService();
   String response = await service.logUser(email, password);
-  print(response);
   if (response == 'user logged') {
     onLog();
   }
 }
 
 /// Création d'une page de connexion/inscription
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   TextEditingController mailController = TextEditingController();
@@ -73,12 +76,13 @@ class LoginPage extends StatelessWidget {
                         2500, // Délai avant l'affichage de cet élément (2500ms)
                     child: Text(
                       'Veuillez vous connecter afin de profiter pleinement '
-                          'de votre application favorite.',
+                      'de votre application favorite.',
                       style: GoogleFonts.poppins(
                         color: Colors.grey[800],
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                      ),textAlign: TextAlign.center,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
@@ -87,7 +91,10 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 35, // Espacement vertical de 35 pixels
             ),
-            LoginForm(mailController: mailController, passController: passController), // Widget du formulaire de connexion
+            LoginForm(
+                mailController: mailController,
+                passController:
+                    passController), // Widget du formulaire de connexion
             DelayedAnimation(
               delay: 5500, // Délai avant l'affichage de cet élément (5500ms)
               child: ElevatedButton(
@@ -107,7 +114,7 @@ class LoginPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                        SignupPage(), // Navigue vers la bottomBar qui vas servir à
+                          SignupPage(), // Navigue vers la bottomBar qui vas servir à
                       // afficher les autres pages
                     ),
                   );
@@ -137,18 +144,19 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  canLogUser(email: mailController.text, password: passController.text,
-                    onLog: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
-                          // afficher les autres pages
-                        ),
-                      );
-                    }
-                  );
+                  canLogUser(
+                      email: mailController.text,
+                      password: passController.text,
+                      onLog: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                            // afficher les autres pages
+                          ),
+                        );
+                      });
                 },
               ),
             ),
@@ -159,8 +167,10 @@ class LoginPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LoginForm extends StatefulWidget {
-  LoginForm({super.key, required this.mailController, required this.passController});
+  LoginForm(
+      {super.key, required this.mailController, required this.passController});
   TextEditingController mailController;
   TextEditingController passController;
 

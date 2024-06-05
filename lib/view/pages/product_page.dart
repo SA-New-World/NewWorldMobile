@@ -5,6 +5,7 @@ import '../../services/api/api_service.dart';
 
 // La classe ProductPage représente une page qui affiche une liste de produits.
 // Elle est Stateless, ce qui signifie qu'elle ne conserve pas d'état mutable elle-même.
+// ignore: must_be_immutable
 class ProductPage extends StatelessWidget {
   ProductPage({super.key}); // Constructeur de la classe ProductPage.
   static const routeName = '/product'; // Nom de la route pour la navigation.
@@ -14,8 +15,10 @@ class ProductPage extends StatelessWidget {
 
   // Fonction asynchrone pour récupérer les produits depuis l'API.
   Future<void> setProducer() async {
-    ApiService service = ApiService(); // Création d'une instance du service API.
-    List<Product> products = await service.getAllProducts(); // Récupération des produits depuis l'API.
+    ApiService service =
+        ApiService(); // Création d'une instance du service API.
+    List<Product> products = await service
+        .getAllProducts(); // Récupération des produits depuis l'API.
     card = products; // Mise à jour de la liste des produits.
   }
 
@@ -45,7 +48,8 @@ class ProductPage extends StatelessWidget {
                   // Les données à afficher sur la carte de produit
                   cardName: card[index].name, // Nom du produit
                   cardPrice: card[index].price, // Prix du produit
-                  cardImg: 'images/${card[index].name}.jpg', // Image du produit (fixe ici)
+                  cardImg: 'images/${card[index].name}.jpg',
+                  product: card[index], // Image du produit (fixe ici)
                 ),
               );
             },

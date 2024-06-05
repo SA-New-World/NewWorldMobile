@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/models/product.dart';
+import 'package:new_world_mobile/view/pages/product_detail_page.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,13 +10,13 @@ class ProductCard extends StatelessWidget {
     required this.cardImg,
     required this.cardName,
     required this.cardPrice,
-    //required this.products,
+    required this.product,
   });
 
   final String cardImg;
   final String cardName;
   final double cardPrice;
-  //final List<Product> products;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +54,9 @@ class ProductCard extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ProductPage(), // Navigue vers la classe MyApp
+                        builder: (context) => ProductDetailPage(
+                          product: product,
+                        ),
                       ),
                     );
                   },
@@ -62,25 +64,25 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: Row(
-                children: [
-                  Text('$cardPrice€'),
-                  ElevatedButton(
-                    child: const Text(
-                      'Acheter',
+                child: Row(
+                  children: [
+                    Text('$cardPrice€'),
+                    ElevatedButton(
+                      child: const Text(
+                        'Acheter',
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductPage(),
+                          ),
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ProductPage(), // Navigue vers la classe MyApp
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              )),
+                  ],
+                ),
+              ),
             ],
           ),
         ],

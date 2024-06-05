@@ -59,12 +59,10 @@ class ApiService {
       //print(response.data == 'success');
       if (response.data == 'success') {
         return 'user logged';
-      }
-      else {
+      } else {
         return 'loging fail';
       }
-    }
-    else {
+    } else {
       throw response;
     }
   }
@@ -73,7 +71,7 @@ class ApiService {
     Response response = await getData("/request", params: {
       'for': 'register',
       'token': api.apikey,
-      'name' : name,
+      'name': name,
       'email': mail,
       'password': pass
     });
@@ -82,15 +80,12 @@ class ApiService {
       //print(response.data == 'success');
       if (response.data == 'success') {
         return 'user created';
-      }
-      else if (response.data == 'invalidemail') {
+      } else if (response.data == 'invalidemail') {
         return 'email not available';
-      }
-      else {
+      } else {
         return 'register fail';
       }
-    }
-    else {
+    } else {
       throw response;
     }
   }
@@ -206,5 +201,27 @@ class ApiService {
       }
     }
     return allProducts;
+  }
+
+  Future getProduct(int id) async {
+    Response response = await getData("/products/$id");
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> json = response.data;
+
+      Product product = jsonToProduct(json);
+      return product;
+    } else {
+      throw response;
+    }
+  }
+
+  Product jsonToProduct(Map<String, dynamic> json) {
+    return Product(
+      description: json['description'],
+      id: json['id'],
+      name: json['name'],
+      price: json['price'],
+    );
   }
 }
