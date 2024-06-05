@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/models/product.dart';
 import 'package:new_world_mobile/view/pages/product_detail_page.dart';
-import 'package:new_world_mobile/view/pages/product_page.dart';
+import 'package:new_world_mobile/view/screens/product_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductCard extends StatelessWidget {
@@ -75,7 +75,7 @@ class ProductCard extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProductPage(),
+                            builder: (context) => ProductScreen(),
                           ),
                         );
                       },

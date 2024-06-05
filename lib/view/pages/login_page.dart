@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import commenté, non utilisé
 import 'package:new_world_mobile/view/components/delayed_animation.dart';
-import 'package:new_world_mobile/view/components/navigation_menu.dart';
+import 'package:new_world_mobile/view/pages/navigation_page.dart';
 import 'package:new_world_mobile/view/pages/signup_page.dart';
 
 import '../../services/api/api_service.dart';
@@ -155,7 +155,7 @@ class LoginPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                            NavigationPage(), // Navigue vers la bottomBar qui vas servir à
                           // afficher les autres pages
                         ),
                       );

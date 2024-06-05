@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/services/api/api_service.dart';
 import 'package:new_world_mobile/view/pages/welcome_page.dart';
-import 'package:new_world_mobile/view/components/navigation_menu.dart';
+import 'package:new_world_mobile/view/pages/navigation_page.dart';
 import 'package:new_world_mobile/services/settings/settings.dart';
 
 void main() async {
@@ -64,7 +64,7 @@ class MyAppState extends State<MyApp> {
       themeMode: Settings().themeMode,
       debugShowCheckedModeBanner: false,
       // On charge d'abord la page de bienvenue si il n'y a pas d'utilisateur
-      home: widget.canEnter ? const NavigationMenu()
+      home: widget.canEnter ? const NavigationPage()
       : const WelcomePage()
     );
   }
