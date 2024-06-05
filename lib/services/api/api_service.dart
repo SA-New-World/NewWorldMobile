@@ -190,6 +190,7 @@ class ApiService {
               name: json['name'],
               description: json['description'],
               price: json['price'].toDouble(),
+              quantity: json['quantity'],
             );
             allProducts.add(product);
           }
@@ -218,10 +219,10 @@ class ApiService {
 
   Product jsonToProduct(Map<String, dynamic> json) {
     return Product(
-      description: json['description'],
-      id: json['id'],
-      name: json['name'],
-      price: json['price'],
-    );
+        description: json['description'],
+        id: json['id'],
+        name: json['name'],
+        price: json['price'],
+        quantity: json['quantity']);
   }
 }

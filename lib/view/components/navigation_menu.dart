@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_world_mobile/view/pages/cart_page.dart';
-import 'package:new_world_mobile/view/pages/info_page.dart';
 import 'package:new_world_mobile/view/pages/product_page.dart';
 import 'package:new_world_mobile/view/pages/settings_page.dart';
 
@@ -15,13 +14,10 @@ class NavigationController extends GetxController {
     ProductPage(),
     // Page panier (constante car n'a pas besoin de changement dynamique pour l'instant)
     const CartPage(),
-    // Exemple de page avec un Container rouge
 
     //To do : Changer ce container par une page favoris qui vas stocker les favoris de l'utilisateur connecté
     const SettingsView(),
 
-    // Page d'informations (constante car n'a pas besoin de changement dynamique pour l'instant)
-    const InfoPage(),
   ];
 }
 
