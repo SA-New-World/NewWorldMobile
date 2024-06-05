@@ -55,6 +55,10 @@ class Product {
   final String description;
   final double price;
   final int quantity;
+  final String brand;
+  final String origin;
+  final String saleCountry;
+  final String nutriscore;
 
   Product({
     required this.id,
@@ -62,6 +66,10 @@ class Product {
     required this.description,
     required this.price,
     required this.quantity,
+    required this.brand,
+    required this.origin,
+    required this.saleCountry,
+    required this.nutriscore,
   });
 }
 

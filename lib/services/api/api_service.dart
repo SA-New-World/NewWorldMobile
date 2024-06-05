@@ -191,6 +191,10 @@ class ApiService {
               description: json['description'],
               price: json['price'].toDouble(),
               quantity: json['quantity'],
+              brand: json['brand'],
+              origin: json['origin'],
+              saleCountry: json['saleCountry'],
+              nutriscore: json['nutriscore'],
             );
             allProducts.add(product);
           }
@@ -219,10 +223,15 @@ class ApiService {
 
   Product jsonToProduct(Map<String, dynamic> json) {
     return Product(
-        description: json['description'],
-        id: json['id'],
-        name: json['name'],
-        price: json['price'],
-        quantity: json['quantity']);
+      description: json['description'],
+      id: json['id'],
+      name: json['name'],
+      price: json['price'],
+      quantity: json['quantity'],
+      brand: json['brand'],
+      origin: json['origin'],
+      saleCountry: json['saleCountry'],
+      nutriscore: json['nutriscore'],
+    );
   }
 }

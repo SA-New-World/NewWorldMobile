@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +7,7 @@ import 'package:new_world_mobile/models/product.dart';
 class ProductDetailPage extends StatelessWidget {
   final Product product;
 
-  ProductDetailPage({Key? key, required this.product}) : super(key: key);
+  const ProductDetailPage({super.key, required this.product});
 
   static const routeName = '/product/detail';
 
@@ -35,16 +36,84 @@ class ProductDetailPage extends StatelessWidget {
               ),
             ],
           ),
-
+          const SizedBox(
+            height: 15, // Espacement vertical de 35 pixels
+          ),
           Row(
             children: [
               const Text(
                 'Quantité disponible: ',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
-              Text(product.quantity.toString(),
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.w300)),
+              Text(
+                product.quantity.toString(),
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15, // Espacement vertical de 35 pixels
+          ),
+          Row(
+            children: [
+              const Text(
+                'Marque: ',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              Text(
+                product.brand,
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15, // Espacement vertical de 35 pixels
+          ),
+          Row(
+            children: [
+              const Text(
+                'Origine du produit : ',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              Text(
+                product.origin,
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15, // Espacement vertical de 35 pixels
+          ),
+          Wrap(
+            children: [
+              const Text(
+                'Pays de vente du produit : ',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              Text(
+                product.saleCountry,
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15, // Espacement vertical de 35 pixels
+          ),
+          Row(
+            children: [
+              const Text(
+                'Nutriscore : ',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              Text(
+                product.nutriscore,
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+              ),
             ],
           ),
           // Ajoutez d'autres widgets pour afficher les détails du produit
