@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // Importe shared_preferences pour le stockage persistant des données.
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/user.dart';
+
 /// UserPreferences utilise le modèle Singleton pour gérer les préférences.
 ///
 /// Permet le stockage et la récupération persistants des préférences utilisateur.
@@ -25,6 +27,16 @@ class Settings with ChangeNotifier {
   /// Initialise SharedPreferences. Doit être appelé avant toute opération.
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
+
+    String? userLogin = _prefs?.getString('userLogin');
+    String? userPassword = _prefs?.getString('userPassword');
+
+    if (userLogin != null && userPassword != null) {
+      User user = User(login: userLogin, password: userPassword);
+
+      _user = user;
+    }
+
     // Récupère le thème depuis l'instance de SharedPreferences
     String? themeModeName = _prefs?.getString('themeMode');
     if (themeModeName == ThemeMode.light.name) {
@@ -39,6 +51,34 @@ class Settings with ChangeNotifier {
 
     // Important! Inform listeners a change has occurred.
     notifyListeners();
+  }
+
+  User? _user;
+
+  User? get user {
+    return _user;
+  }
+
+  /// Setter pour l'utilisateur. Enregistre le login et le mot de passe dans SharedPreferences.
+  void updateUser(User? newUser) {
+    if (newUser == null) return;
+
+    if (newUser == _user) return;
+
+    _user = newUser;
+
+    _prefs?.setString('userLogin', newUser.login);
+    _prefs?.setString('userPassword', newUser.password);
+  }
+
+  // supprime l'utilisateur des SharedPreferences
+  void removeUser() {
+    if (_user == null) return;
+
+    _user = null;
+
+    _prefs?.remove('userLogin');
+    _prefs?.remove('userPassword');
   }
 
   // Theme privé affin de permettre la compatibilité

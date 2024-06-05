@@ -6,15 +6,18 @@ import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/view/pages/signup_page.dart';
 
 import '../../services/api/api_service.dart';
+import '../../services/settings/settings.dart';
+import '../../models/user.dart';
 
-Future<void> canLogUser(
-    {required String email,
-    required String password,
-    required Function onLog}) async {
+Future<void> canLogUser({required String email, required String password, required Function({required String email, required String password}) onLog, required Function onFail}) async {
   ApiService service = ApiService();
   String response = await service.logUser(email, password);
+  print(response);
   if (response == 'user logged') {
-    onLog();
+    onLog(email: email, password: password);
+  }
+  else {
+    onFail();
   }
 }
 
@@ -144,19 +147,28 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  canLogUser(
-                      email: mailController.text,
-                      password: passController.text,
-                      onLog: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
-                            // afficher les autres pages
-                          ),
-                        );
-                      });
+                  canLogUser(email: mailController.text, password: passController.text,
+                    // si la connexion as fonctionnée
+                    onLog: ({required email, required password}) {// on récupère l'email et le mot de passe qui as été utilisé lors de la connexion
+                      // accéder à l'application
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const NavigationMenu(), // Navigue vers la bottomBar qui vas servir à
+                          // afficher les autres pages
+                        ),
+                      );
+                      // enregistrer l'utilisateur dans le cache
+                      Settings().updateUser(User(login: email, password: password));
+                    },
+                    // si la connexion as échoué
+                    onFail: () {
+                      // vide les champs de saisie
+                      mailController.text = "";
+                      passController.text = "";
+                    }
+                  );
                 },
               ),
             ),

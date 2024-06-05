@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/view/pages/welcome_page.dart';
+import 'package:new_world_mobile/view/components/navigation_menu.dart';
 import 'package:new_world_mobile/services/settings/settings.dart';
 
 
@@ -22,8 +23,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  ThemeMode themeMode = Settings().themeMode;
-
   // Make the access to the setState
   updateThemeMode() => setState(() {});
 
@@ -53,8 +52,8 @@ class MyAppState extends State<MyApp> {
       ),
       themeMode: Settings().themeMode,
       debugShowCheckedModeBanner: false,
-      // On charge d'abord la page de bienvenue
-      home: const WelcomePage(),
+      // On charge d'abord la page de bienvenue si il n'y a pas d'utilisateur
+      home: Settings().user == null ? const WelcomePage() : const NavigationMenu()
     );
   }
 }

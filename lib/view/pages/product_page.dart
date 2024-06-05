@@ -22,6 +22,8 @@ class ProductPage extends StatelessWidget {
     card = products; // Mise à jour de la liste des produits.
   }
 
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -39,23 +41,58 @@ class ProductPage extends StatelessWidget {
           // Si la récupération des données s'est terminée avec succès
         } else {
           // Construit une liste de cartes de produits
-          return ListView.builder(
-            itemCount: card.length, // Nombre d'éléments dans la liste
-            itemBuilder: (context, index) {
-              // Construit chaque élément de la liste (une carte de produit)
-              return Card(
-                child: ProductCard(
-                  // Les données à afficher sur la carte de produit
-                  cardName: card[index].name, // Nom du produit
-                  cardPrice: card[index].price, // Prix du produit
-                  cardImg: 'images/${card[index].name}.jpg',
-                  product: card[index], // Image du produit (fixe ici)
-                ),
-              );
-            },
+          return Column(
+            children: [
+              SearchBar(searchController: searchController),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: card.length, // Nombre d'éléments dans la liste
+                itemBuilder: (context, index) {
+                  // Construit chaque élément de la liste (une carte de produit)
+                  return Card(
+                    child: ProductCard(
+                      // Les données à afficher sur la carte de produit
+                      cardName: card[index].name, // Nom du produit
+                      cardPrice: card[index].price, // Prix du produit
+                      cardImg: 'images/${card[index].name}.jpg',
+                      product: card[index], // Image du produit (fixe ici)
+                    ),
+                  );
+                },
+              )
+            ]
           );
         }
       },
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class SearchBar extends StatefulWidget {
+  SearchBar({super.key, required this.searchController});
+  TextEditingController searchController;
+
+  @override
+  State<StatefulWidget> createState() => SearchBarState();
+}
+
+class SearchBarState extends State<SearchBar> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Row(
+        children: [
+          SizedBox(
+            width: 200,
+            child: TextField(
+              controller: widget.searchController,
+            )
+          ),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+        ],
+      ),
     );
   }
 }
