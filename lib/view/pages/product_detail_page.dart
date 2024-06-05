@@ -24,7 +24,7 @@ class ProductDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: Image.asset('images/${product.name.toLowerCase()}.jpg',
+              child: Image.asset('images/${product.name}.jpg',
                   height: 200),
             ),
             const SizedBox(height: 20),
