@@ -11,9 +11,11 @@ void main() async {
   // Initialiser les paramètres ou d'autres services
   await Settings().init();
 
-  bool isLogged = false;
+  // Vérrification de si l'utilisateur est connecté
+  bool isLogged = false;// Par défaut, il n'y a pas d'utilisateur connecté.
   final user = Settings().user;
-  if (user != null) {
+  if (user != null) {// Vérifie si il y a un utilisateur enregistré.
+    // Il faut vérifier que l'utilisateur enregistré peut toujours se connecter.
     String response = await ApiService().logUser(user.login, user.password);
     if (response == 'user logged') {
       isLogged = true;
@@ -63,7 +65,7 @@ class MyAppState extends State<MyApp> {
       ),
       themeMode: Settings().themeMode,
       debugShowCheckedModeBanner: false,
-      // On charge d'abord la page de bienvenue si il n'y a pas d'utilisateur
+      // On accède à l'application avec la page de navigation qui gère les screen ou on charge d'abord la page de bienvenue.
       home: widget.canEnter ? const NavigationPage()
       : const WelcomePage()
     );

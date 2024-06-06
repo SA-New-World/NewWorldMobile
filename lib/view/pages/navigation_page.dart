@@ -3,20 +3,9 @@ import 'package:new_world_mobile/view/screens/cart_screen.dart';
 import 'package:new_world_mobile/view/screens/product_screen.dart';
 import 'package:new_world_mobile/view/screens/favorite_screen.dart';
 import 'package:new_world_mobile/view/pages/settings_page.dart';
+import 'package:new_world_mobile/models/screen_data.dart';
 
-class ScreenData {
-  String title;
-  Icon icon;
-  String iconLabel;
-  Widget screen;
-
-  ScreenData({
-    required this.title,
-    required this.icon,
-    required this.iconLabel,
-    required this.screen
-  });
-}
+import 'package:new_world_mobile/services/notifications/notifications.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
@@ -68,6 +57,8 @@ class NavigationPageState extends State<NavigationPage> with SingleTickerProvide
 
   @override
   Widget build(BuildContext context) {
+    // affiche la nitification si elle est disponible
+    NotificationsService().showNotification(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('New World'),
@@ -84,6 +75,7 @@ class NavigationPageState extends State<NavigationPage> with SingleTickerProvide
             icon: const Icon(Icons.settings)
           )
         ],
+        leading: Container(),
       ),
       body: TabBarView(
         controller: _tabController,

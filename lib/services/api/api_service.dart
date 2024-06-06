@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import '../../models/product.dart';
 import 'api.dart';
 
+import 'package:new_world_mobile/services/notifications/notifications.dart';
+
 /// Classe `ApiService` gère les requêtes réseau pour récupérer des données de films depuis une API externe.
 ///
 /// Cette classe utilise la bibliothèque Dio pour effectuer des requêtes HTTP. Elle est conçue pour interroger
@@ -38,12 +40,11 @@ class ApiService {
     }
 
     // Lancement de la requète
-    final response = await dio.get(url, queryParameters: query);
-
-    if (response.statusCode == 200) {
-      return response;
-    } else {
-      throw response;
+    try {
+      return await dio.get(url, queryParameters: query);
+    }
+    on DioException catch(e) {
+      return Response(requestOptions: RequestOptions(), statusCode: 404);
     }
   }
 
@@ -63,7 +64,8 @@ class ApiService {
         return 'loging fail';
       }
     } else {
-      throw response;
+      NotificationsService().setError(true);
+      return 'request fail';
     }
   }
 
@@ -86,7 +88,7 @@ class ApiService {
         return 'register fail';
       }
     } else {
-      throw response;
+      return 'request fail';
     }
   }
 
@@ -176,6 +178,7 @@ class ApiService {
         Response response = await getData("/products", params: {
           'page': page,
         });
+        if (response.statusCode != 200) {NotificationsService().setError(true);}
         Map data = response.data;
         List<dynamic> results = data["hydra:member"];
 
