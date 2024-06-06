@@ -28,10 +28,12 @@ class NotificationsService {
 
   showNotification(context) async {
     if (_error) {
+      // empécher le spam
+      _error = false;
       // attendre la fin du build
-    WidgetsBinding.instance.addPostFrameCallback(
-      // afficher la notification
-      (_) => ScaffoldMessenger.of(context).showSnackBar(
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+        // afficher la notification
+        ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Request fail"),
             action: SnackBarAction(
