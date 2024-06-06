@@ -14,30 +14,28 @@ class NavigationPage extends StatefulWidget {
   State<StatefulWidget> createState() => NavigationPageState();
 }
 
-class NavigationPageState extends State<NavigationPage> with SingleTickerProviderStateMixin {
+class NavigationPageState extends State<NavigationPage>
+    with SingleTickerProviderStateMixin {
   NavigationPageState();
 
   TabController? _tabController;
 
   final List<ScreenData> _screenData = [
     ScreenData(
-      title: 'Accueil',
-      icon: const Icon(Icons.home),
-      iconLabel: 'Accueil',
-      screen: ProductScreen()
-    ),
+        title: 'Accueil',
+        icon: const Icon(Icons.home),
+        iconLabel: 'Accueil',
+        screen: ProductScreen()),
     ScreenData(
-      title: 'Panier',
-      icon: const Icon(Icons.storefront),
-      iconLabel: 'Panier',
-      screen: const CartScreen()
-    ),
+        title: 'Panier',
+        icon: const Icon(Icons.storefront),
+        iconLabel: 'Panier',
+        screen: const CartScreen()),
     ScreenData(
-      title: 'Favoris',
-      icon: const Icon(Icons.favorite),
-      iconLabel: 'Favoris',
-      screen: const FavoriteScreen()
-    )
+        title: 'Favoris',
+        icon: const Icon(Icons.favorite),
+        iconLabel: 'Favoris',
+        screen: const FavoriteScreen())
   ];
 
   void _handleTabSelection() {
@@ -64,30 +62,27 @@ class NavigationPageState extends State<NavigationPage> with SingleTickerProvide
         title: const Text('New World'),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsPage()
-                )
-              );
-            },
-            icon: const Icon(Icons.settings)
-          )
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()));
+              },
+              icon: const Icon(Icons.settings))
         ],
         leading: Container(),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          for (int item = 0; item < _screenData.length;item++)
+          for (int item = 0; item < _screenData.length; item++)
             _screenData[item].screen
         ],
       ),
       bottomNavigationBar: TabBar(
         controller: _tabController,
         tabs: [
-          for (int item = 0; item < _screenData.length;item++)
+          for (int item = 0; item < _screenData.length; item++)
             Tab(icon: _screenData[item].icon, text: _screenData[item].iconLabel)
         ],
         labelStyle: const TextStyle(fontSize: 12),
