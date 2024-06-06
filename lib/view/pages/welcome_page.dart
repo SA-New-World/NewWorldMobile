@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_world_mobile/view/pages/login_page.dart'; // Importation de la page InfoPage
 
+import 'package:new_world_mobile/services/notifications/notifications.dart';
+
 // Définition d'un StatelessWidget nommé WelcomePage
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key}); // Constructeur avec clé super.key
 
   @override
   Widget build(BuildContext context) {
+    // affiche la nitification si elle est disponible
+    NotificationsService().showNotification(context);
     return Scaffold(
       // Scaffold fournit la structure de base pour l'écran
       body: SingleChildScrollView(
@@ -65,9 +69,8 @@ class WelcomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                              LoginPage() // Navigation vers InfoPage lorsqu'on appuie sur le bouton
-                            ),
+                          builder: (context) => LoginPage() // Navigation vers InfoPage lorsqu'on appuie sur le bouton
+                        ),
                       );
                     },
                   ),
