@@ -163,6 +163,51 @@ class ApiService {
     );
   }
 
+  Future<String> addToCart(String mail, String pass, int productId) async {
+    Response response = await getData("/request", params: {
+      'for': 'addToCart',
+      'token': api.apikey,
+      'email': mail,
+      'password': pass,
+      'product': productId
+    });
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw response;
+    }
+  }
+
+  Future<String> removeFromCart(String mail, String pass, int productId) async {
+    Response response = await getData("/request", params: {
+      'for': 'removeFromCart',
+      'token': api.apikey,
+      'email': mail,
+      'password': pass,
+      'product': productId
+    });
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw response;
+    }
+  }
+
+  Future<String> removeAllFromCart(String mail, String pass, int productId) async {
+    Response response = await getData("/request", params: {
+      'for': 'removeAllFromCart',
+      'token': api.apikey,
+      'email': mail,
+      'password': pass,
+      'product': productId
+    });
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw response;
+    }
+  }
+
   /// Récupère une liste des films populaires à partir de l'API.
   ///
   /// [pageNumber] Le numéro de la page à récupérer pour la pagination des résultats.

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/models/Cart.dart';
 import 'package:new_world_mobile/models/product.dart';
+import 'package:new_world_mobile/services/settings/settings.dart';
 import 'package:new_world_mobile/view/pages/product_detail_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:new_world_mobile/services/api/api_service.dart';
+import 'package:new_world_mobile/models/user.dart';
 
 class ProductCard extends StatefulWidget {
   final String cardImg;
@@ -25,12 +29,13 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   int quantity = 0; // Initialize quantity state
 
+  @override
   void initState() {
     super.initState();
-    quantity = Cart.instance.getQuantity(widget.product) ??
-        0; // Fetch initial quantity
+    quantity = Cart.instance.getQuantity(widget.product);// Fetch initial quantity
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       constraints:
@@ -85,7 +90,6 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                       );
                     },
-                    child: const Text('En savoir plus'),
                     style: ElevatedButton.styleFrom(
                       minimumSize:
                           const Size(100, 40), // Set desired width and height
@@ -94,6 +98,7 @@ class _ProductCardState extends State<ProductCard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10), // Adjust padding
                     ),
+                    child: const Text('En savoir plus'),
                   ),
                 ),
               ],
@@ -108,12 +113,14 @@ class _ProductCardState extends State<ProductCard> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.remove),
-                  onPressed: quantity > 0
-                      ? () => setState(() {
-                            quantity--;
-                            Cart.instance.setQuantity(widget.product, quantity);
-                          })
-                      : null,
+                  onPressed: quantity > 0 ? () => setState(() {
+                    quantity--;
+                    Cart.instance.setQuantity(widget.product, quantity);
+                    User? user = Settings().user;
+                    if (user != null) {
+                      ApiService().removeFromCart(user.login, user.password, widget.product.id);
+                    }
+                  }) : null,
                 ),
                 SizedBox(
                   width: 40,
@@ -138,6 +145,10 @@ class _ProductCardState extends State<ProductCard> {
                   onPressed: () => setState(() {
                     quantity++;
                     Cart.instance.setQuantity(widget.product, quantity);
+                    User? user = Settings().user;
+                    if (user != null) {
+                      ApiService().addToCart(user.login, user.password, widget.product.id);
+                    }
                   }),
                 ),
                 IconButton(
@@ -145,6 +156,10 @@ class _ProductCardState extends State<ProductCard> {
                   onPressed: () => setState(() {
                     quantity = 0;
                     Cart.instance.deleteFromCart(widget.product);
+                    User? user = Settings().user;
+                    if (user != null) {
+                      ApiService().removeAllFromCart(user.login, user.password, widget.product.id);
+                    }
                   }),
                 ),
               ],

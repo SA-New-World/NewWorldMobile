@@ -75,6 +75,7 @@ class Product {
   });
 }
 
+/*
 class User {
   final int id;
   final String name;
@@ -84,6 +85,7 @@ class User {
     required this.name,
   });
 }
+*/
 
 class NutriscoreImage extends StatelessWidget {
   final Product product;
