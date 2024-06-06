@@ -83,10 +83,9 @@ class SearchBarState extends State<SearchBar> {
       child: Row(
         children: [
           SizedBox(
-              width: 200,
               child: TextField(
-                controller: widget.searchController,
-              )),
+            controller: widget.searchController,
+          )),
           IconButton(onPressed: () {}, icon: const Icon(Icons.search))
         ],
       ),

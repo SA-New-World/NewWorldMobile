@@ -1,4 +1,9 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="new_world_mobile">
+
+    <!-- Ajoutez cette ligne pour les permissions Internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="new_world_mobile"
         android:name="${applicationName}"
