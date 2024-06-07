@@ -32,14 +32,22 @@ class _ProductCardState extends State<ProductCard> {
   @override
   void initState() {
     super.initState();
-    quantity = Cart.instance.getQuantity(widget.product);// Fetch initial quantity
+    setQuantity();
+    //quantity = Cart.instance.getQuantity(widget.product);// Fetch initial quantity
+  }
+
+  Future<void> setQuantity() async {
+    User? user = Settings().user;
+    if (user != null) {
+      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints:
-          BoxConstraints(maxWidth: 400), // Constraint to a maximum width
+          const BoxConstraints(maxWidth: 400), // Constraint to a maximum width
       decoration: BoxDecoration(
         border: Border.all(width: 2.0),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -113,14 +121,15 @@ class _ProductCardState extends State<ProductCard> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.remove),
-                  onPressed: quantity > 0 ? () => setState(() {
-                    quantity--;
-                    Cart.instance.setQuantity(widget.product, quantity);
+                  onPressed: quantity > 0 ? () async {
                     User? user = Settings().user;
                     if (user != null) {
                       ApiService().removeFromCart(user.login, user.password, widget.product.id);
+                      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
+                      Cart.instance.setQuantity(widget.product, quantity);
+                      setState(() {});
                     }
-                  }) : null,
+                  } : null,
                 ),
                 SizedBox(
                   width: 40,
@@ -142,25 +151,27 @@ class _ProductCardState extends State<ProductCard> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   color: Colors.red,
-                  onPressed: () => setState(() {
-                    quantity++;
-                    Cart.instance.setQuantity(widget.product, quantity);
+                  onPressed: () async {
                     User? user = Settings().user;
                     if (user != null) {
-                      ApiService().addToCart(user.login, user.password, widget.product.id);
+                      await ApiService().addToCart(user.login, user.password, widget.product.id);
+                      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
+                      Cart.instance.setQuantity(widget.product, quantity);
+                      setState(() {});
                     }
-                  }),
+                  },
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => setState(() {
-                    quantity = 0;
-                    Cart.instance.deleteFromCart(widget.product);
+                  onPressed: () async {
                     User? user = Settings().user;
                     if (user != null) {
                       ApiService().removeAllFromCart(user.login, user.password, widget.product.id);
+                      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
+                      Cart.instance.deleteFromCart(widget.product);
+                      setState(() {});
                     }
-                  }),
+                  },
                 ),
               ],
             ),
