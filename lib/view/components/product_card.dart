@@ -41,6 +41,7 @@ class _ProductCardState extends State<ProductCard> {
     if (user != null) {
       quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
     }
+    setState(() {});
   }
 
   @override
