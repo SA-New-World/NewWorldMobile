@@ -30,7 +30,7 @@ class NavigationPageState extends State<NavigationPage>
         title: 'Panier',
         icon: const Icon(Icons.storefront),
         iconLabel: 'Panier',
-        screen: const CartScreen()),
+        screen: CartScreen()),
     ScreenData(
         title: 'Favoris',
         icon: const Icon(Icons.favorite),

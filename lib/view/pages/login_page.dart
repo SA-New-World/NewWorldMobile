@@ -155,7 +155,7 @@ class LoginPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                            NavigationPage(), // Navigue vers la bottomBar qui vas servir à
+                            const NavigationPage(), // Navigue vers la bottomBar qui vas servir à
                           // afficher les autres pages
                         ),
                       );

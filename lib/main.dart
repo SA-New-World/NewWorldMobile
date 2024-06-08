@@ -12,9 +12,10 @@ void main() async {
   await Settings().init();
 
   // Vérrification de si l'utilisateur est connecté
-  bool isLogged = false;// Par défaut, il n'y a pas d'utilisateur connecté.
+  bool isLogged = false; // Par défaut, il n'y a pas d'utilisateur connecté.
   final user = Settings().user;
-  if (user != null) {// Vérifie si il y a un utilisateur enregistré.
+  if (user != null) {
+    // Vérifie si il y a un utilisateur enregistré.
     // Il faut vérifier que l'utilisateur enregistré peut toujours se connecter.
     String response = await ApiService().logUser(user.login, user.password);
     if (response == 'user logged') {
@@ -45,29 +46,27 @@ class MyAppState extends State<MyApp> {
     // Give the setState to the singleton function
     Settings().setOnUpdateThemeMode(updateThemeMode);
     return MaterialApp(
-      theme: ThemeData(
-        // Thême de l'application
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        // Thême de l'application
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(),
-          bodyMedium: TextStyle(),
-        ).apply(
-          bodyColor: Colors.white,
-          displayColor: Colors.white,
+        theme: ThemeData(
+          // Thême de l'application
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
         ),
-        scaffoldBackgroundColor: Colors.black,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      themeMode: Settings().themeMode,
-      debugShowCheckedModeBanner: false,
-      // On accède à l'application avec la page de navigation qui gère les screen ou on charge d'abord la page de bienvenue.
-      home: widget.canEnter ? const NavigationPage()
-      : const WelcomePage()
-    );
+        darkTheme: ThemeData(
+          // Thême de l'application
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(),
+            bodyMedium: TextStyle(),
+          ).apply(
+            bodyColor: Colors.white,
+            displayColor: Colors.white,
+          ),
+          scaffoldBackgroundColor: Colors.black,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        themeMode: Settings().themeMode,
+        debugShowCheckedModeBanner: false,
+        // On accède à l'application avec la page de navigation qui gère les screen ou on charge d'abord la page de bienvenue.
+        home: widget.canEnter ? const NavigationPage() : const WelcomePage());
   }
 }

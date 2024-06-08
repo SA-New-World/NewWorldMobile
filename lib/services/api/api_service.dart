@@ -1,8 +1,12 @@
 // import 'dart:ffi';
 
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import '../../models/product.dart';
 import 'api.dart';
+
+import 'package:html_unescape/html_unescape.dart';
 
 import 'package:new_world_mobile/services/notifications/notifications.dart';
 
@@ -42,8 +46,7 @@ class ApiService {
     // Lancement de la requète
     try {
       return await dio.get(url, queryParameters: query);
-    }
-    on DioException {
+    } on DioException {
       return Response(requestOptions: RequestOptions(), statusCode: 404);
     }
   }
@@ -55,6 +58,8 @@ class ApiService {
       'email': mail,
       'password': pass
     });
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       //print(response.data);
       //print(response.data == 'success');
@@ -103,7 +108,9 @@ class ApiService {
         Response response = await getData("/products", params: {
           'page': page,
         });
-        if (response.statusCode != 200) {NotificationsService().setError(true);}
+        if (response.statusCode != 200) {
+          NotificationsService().setError(true);
+        }
         Map data = response.data;
         List<dynamic> results = data["hydra:member"];
 
@@ -193,7 +200,8 @@ class ApiService {
     }
   }
 
-  Future<String> removeAllFromCart(String mail, String pass, int productId) async {
+  Future<String> removeAllFromCart(
+      String mail, String pass, int productId) async {
     Response response = await getData("/request", params: {
       'for': 'removeAllFromCart',
       'token': api.apikey,
@@ -223,78 +231,36 @@ class ApiService {
     }
   }
 
-  /// Récupère une liste des films populaires à partir de l'API.
-  ///
-  /// [pageNumber] Le numéro de la page à récupérer pour la pagination des résultats.
-  ///
-  /// Retourne une liste d'objets `Movie` si la requête est réussie.
-  /// Sinon, lève une exception contenant la réponse de la requête.
-  /*Future<List<Producer>> getAllProducer() async {
-    Response response = await getData("/producers", params: {
-      'page': 1,
+  Future<List<Product>> getCart(String mail, String pass) async {
+    Response response = await getData("/request", params: {
+      'for': 'getCart',
+      'token': api.apikey,
+      'email': mail,
+      'password': pass
     });
+    List<Product> productsOfCart = [];
     if (response.statusCode == 200) {
-      Map data = response.data;
+      String data = HtmlUnescape().convert(response.data);
 
-      List<dynamic> results = data["hydra:member"];
+      Map results = json.decode(data);
 
-      List<Producer> producers = [];
-
-      for (Map<String, dynamic> json in results) {
-        // Transformation du JSON en objet Movie
-        Producer producer = Producer(
-          id: json['id'] as int,
-          user: User(id: 1, name: json['user'] as String),
-          productType: json['productType'] as String,
-          description: json['description'] as String,
-          advancement: json['advancement'] as String,
+      results.forEach((key, json) {
+        Product product = Product(
+          id: json['id'],
+          name: json['name'],
+          description: json['description'],
+          price: json['price'].toDouble(),
+          quantity: json['quantity'],
+          brand: json['brand'],
+          origin: json['origin'],
+          saleCountry: json['saleCountry'],
+          nutriscore: json['nutriscore'],
         );
-        producers.add(producer);
-      }
-      Response response2 = await getData("/users");
-      if (response2.statusCode == 200) {
-        Map data2 = response2.data;
-        List<dynamic> results2 = data2["hydra:member"];
-
-        for (Map<String, dynamic> json in results2) {
-          // Transformation du JSON en objet
-          User user = User(
-            id: json['id'] as int,
-            name: json['name'] as String,
-          );
-          for (int i = 0; i < producers.length; i++) {
-            if (producers.length >= i &&
-                producers[i].user.name == "/api/users/${user.id}") {
-              producers[i].user = user;
-            }
-          }
-        }
-      }
-      return producers;
+        productsOfCart.add(product);
+      });
+      return productsOfCart;
     } else {
       throw response;
     }
   }
-
-  Future<List<User>> getAllUser() async {
-    Response response = await getData("/users");
-    if (response.statusCode == 200) {
-      Map data = response.data;
-      List<dynamic> results1 = data["hydra:member"];
-
-      List<User> users = [];
-
-      for (Map<String, dynamic> json in results1) {
-        // Transformation du JSON en objet Movie
-        User user = User(
-          id: json['id'] as int,
-          name: json['name'] as String,
-        );
-        users.add(user);
-      }
-      return users;
-    } else {
-      throw response;
-    }
-  }*/
 }
