@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:new_world_mobile/view/pages/welcome_page.dart';
 import '../../services/settings/settings.dart';
@@ -20,6 +21,21 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Settings().user != null ? Text(Settings().user!.login) : const Text('not logged'),
+          TextButton(
+            onPressed: () {
+              // supprime l'utilisateur du cache
+              Settings().removeUser();
+              // retour à la page d'accueil
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WelcomePage()),
+                  // empécher le retour en arrière pour l'utilisateur
+                  (Route<dynamic> route) => false);
+            },
+            child: const Text('Se déconnecter')
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             // Glue the SettingsController to the theme selection DropdownButton.
@@ -46,20 +62,6 @@ class SettingsPage extends StatelessWidget {
                 )
               ],
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              // supprime l'utilisateur du cache
-              Settings().removeUser();
-              // retour à la page d'accueil
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WelcomePage()),
-                  // empécher le retour en arrière pour l'utilisateur
-                  (Route<dynamic> route) => false);
-            },
-            child: const Text('Se déconnecter')
           )
         ],
       )
