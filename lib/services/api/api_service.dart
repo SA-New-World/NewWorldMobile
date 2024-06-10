@@ -238,7 +238,7 @@ class ApiService {
       'email': mail,
       'password': pass
     });
-    List<Product> productsOfCart = [];
+    List<Product> products = [];
     if (response.statusCode == 200) {
       if (response.data != "errorno cart") {
         String data = HtmlUnescape().convert(response.data);
@@ -257,10 +257,46 @@ class ApiService {
             saleCountry: json['saleCountry'],
             nutriscore: json['nutriscore'],
           );
-          productsOfCart.add(product);
+          products.add(product);
         });
       }
-      return productsOfCart;
+      return products;
+    } else {
+      throw response;
+    }
+  }
+
+  Future<List<Product>> searchProduct(String mail, String pass, String productName) async {
+    Response response = await getData("/request", params: {
+      'for': 'searchProduct',
+      'token': api.apikey,
+      'email': mail,
+      'password': pass,
+      'name': productName
+    });
+    List<Product> products = [];
+    if (response.statusCode == 200) {
+      if (response.data != "errorno product") {
+        String data = HtmlUnescape().convert(response.data);
+
+        Map results = json.decode(data);
+
+        results.forEach((key, json) {
+          Product product = Product(
+            id: json['id'],
+            name: json['name'],
+            description: json['description'],
+            price: json['price'].toDouble(),
+            quantity: json['quantity'],
+            brand: json['brand'],
+            origin: json['origin'],
+            saleCountry: json['saleCountry'],
+            nutriscore: json['nutriscore'],
+          );
+          products.add(product);
+        });
+      }
+      return products;
     } else {
       throw response;
     }
