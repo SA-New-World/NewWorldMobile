@@ -240,24 +240,26 @@ class ApiService {
     });
     List<Product> productsOfCart = [];
     if (response.statusCode == 200) {
-      String data = HtmlUnescape().convert(response.data);
+      if (response.data != "errorno cart") {
+        String data = HtmlUnescape().convert(response.data);
 
-      Map results = json.decode(data);
+        Map results = json.decode(data);
 
-      results.forEach((key, json) {
-        Product product = Product(
-          id: json['id'],
-          name: json['name'],
-          description: json['description'],
-          price: json['price'].toDouble(),
-          quantity: json['quantity'],
-          brand: json['brand'],
-          origin: json['origin'],
-          saleCountry: json['saleCountry'],
-          nutriscore: json['nutriscore'],
-        );
-        productsOfCart.add(product);
-      });
+        results.forEach((key, json) {
+          Product product = Product(
+            id: json['id'],
+            name: json['name'],
+            description: json['description'],
+            price: json['price'].toDouble(),
+            quantity: json['quantity'],
+            brand: json['brand'],
+            origin: json['origin'],
+            saleCountry: json['saleCountry'],
+            nutriscore: json['nutriscore'],
+          );
+          productsOfCart.add(product);
+        });
+      }
       return productsOfCart;
     } else {
       throw response;
