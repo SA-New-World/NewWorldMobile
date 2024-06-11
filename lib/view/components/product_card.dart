@@ -4,9 +4,9 @@ import 'package:new_world_mobile/models/product.dart';
 import 'package:new_world_mobile/services/settings/settings.dart';
 import 'package:new_world_mobile/view/pages/product_detail_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:new_world_mobile/services/api/api_service.dart';
 import 'package:new_world_mobile/models/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductCard extends StatefulWidget {
   final String cardImg;
@@ -15,7 +15,7 @@ class ProductCard extends StatefulWidget {
   final Product product;
 
   const ProductCard({
-    super.key,
+    Key? key,
     required this.cardImg,
     required this.cardName,
     required this.cardPrice,
@@ -27,28 +27,77 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  int quantity = 0; // Initialize quantity state
+  late TextEditingController _quantityController;
+  final FocusNode _focusNode = FocusNode();
+  int _localQuantity = 0; // Variable pour stocker localement la valeur de la quantité
 
   @override
   void initState() {
     super.initState();
-    setQuantity();
-    //quantity = Cart.instance.getQuantity(widget.product);// Fetch initial quantity
+    _quantityController = TextEditingController(text: '$_localQuantity');
+    _focusNode.addListener(_onFocusChange);
+    _loadLocalQuantity(); // Charger la valeur de la quantité depuis les préférences partagées
   }
 
-  Future<void> setQuantity() async {
+  void _onFocusChange() {
+    if (!_focusNode.hasFocus) {
+      final parsedQuantity = int.tryParse(_quantityController.text) ?? 0;
+      if (parsedQuantity >= 0) {
+        setState(() {
+          _localQuantity =
+              parsedQuantity; // Mettre à jour localement la valeur de la quantité
+        });
+        _updateQuantity(
+            parsedQuantity); // Appeler la fonction _updateQuantity avec la nouvelle valeur
+      } else {
+        _quantityController.text = '$_localQuantity';
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _quantityController.dispose();
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  Future<void> _updateQuantity(int newQuantity) async {
     User? user = Settings().user;
     if (user != null) {
-      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
+      final difference = newQuantity - _localQuantity;
+      if (difference > 0) {
+        await ApiService()
+            .addToCart(user.login, user.password, widget.product.id);
+      } else if (difference < 0) {
+        await ApiService()
+            .removeFromCart(user.login, user.password, widget.product.id);
+      }
+      _localQuantity = newQuantity;
+      _quantityController.text = '$_localQuantity';
+      await _saveLocalQuantity(); // Sauvegarder la nouvelle valeur de la quantité dans les préférences partagées
+      Cart.instance.setQuantity(widget.product, _localQuantity);
     }
-    setState(() {});
+  }
+
+  Future<void> _loadLocalQuantity() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _localQuantity = prefs.getInt('localQuantity_${widget.product.id}') ?? 0;
+      _quantityController.text = '$_localQuantity';
+    });
+  }
+
+  Future<void> _saveLocalQuantity() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('localQuantity_${widget.product.id}', _localQuantity);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints:
-          const BoxConstraints(maxWidth: 400), // Constraint to a maximum width
+      constraints: const BoxConstraints(maxWidth: 400),
       decoration: BoxDecoration(
         border: Border.all(width: 2.0),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -63,26 +112,19 @@ class _ProductCardState extends State<ProductCard> {
             ),
           ),
           const SizedBox(height: 20),
-
-          // Use FadeInImage for smooth loading (assuming network image)
           widget.cardImg.startsWith('http')
               ? FadeInImage(
-                  placeholder: const AssetImage(
-                      'assets/placeholder.png'), // Placeholder image
+                  placeholder: const AssetImage('assets/placeholder.png'),
                   image: NetworkImage(widget.cardImg),
                   fit: BoxFit.cover,
-                  width:
-                      double.infinity, // Make image take full width available
-                  height: 200, // Adjust height as needed
+                  width: double.infinity,
+                  height: 200,
                 )
               : SizedBox(
-                  width:
-                      double.infinity, // Make image take full width available
-                  height: 200, // Adjust height as needed
+                  width: double.infinity,
+                  height: 200,
                   child: Image.asset(widget.cardImg, fit: BoxFit.cover),
                 ),
-
-          // Buttons section
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -100,12 +142,9 @@ class _ProductCardState extends State<ProductCard> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          const Size(100, 40), // Set desired width and height
-                      textStyle: const TextStyle(
-                          fontSize: 14), // Reduce font size if needed
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10), // Adjust padding
+                      minimumSize: const Size(100, 40),
+                      textStyle: const TextStyle(fontSize: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                     ),
                     child: const Text('En savoir plus'),
                   ),
@@ -113,8 +152,6 @@ class _ProductCardState extends State<ProductCard> {
               ],
             ),
           ),
-
-          // Quantity management section
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
@@ -122,29 +159,23 @@ class _ProductCardState extends State<ProductCard> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.remove),
-                  onPressed: quantity > 0 ? () async {
-                    User? user = Settings().user;
-                    if (user != null) {
-                      ApiService().removeFromCart(user.login, user.password, widget.product.id);
-                      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
-                      Cart.instance.setQuantity(widget.product, quantity);
-                      setState(() {});
-                    }
-                  } : null,
+                  onPressed: _localQuantity > 0
+                      ? () => _updateQuantity(_localQuantity - 1)
+                      : null,
                 ),
                 SizedBox(
                   width: 40,
                   child: TextField(
                     style: const TextStyle(color: Colors.black),
-                    controller: TextEditingController(text: '$quantity'),
+                    controller: _quantityController,
                     keyboardType: TextInputType.number,
-                    onChanged: (value) {
+                    focusNode: _focusNode,
+                    onSubmitted: (value) {
                       final parsedQuantity = int.tryParse(value) ?? 0;
                       if (parsedQuantity >= 0) {
-                        setState(() {
-                          quantity = parsedQuantity;
-                          Cart.instance.setQuantity(widget.product, quantity);
-                        });
+                        _updateQuantity(parsedQuantity);
+                      } else {
+                        _quantityController.text = '$_localQuantity';
                       }
                     },
                   ),
@@ -152,27 +183,7 @@ class _ProductCardState extends State<ProductCard> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   color: Colors.red,
-                  onPressed: () async {
-                    User? user = Settings().user;
-                    if (user != null) {
-                      await ApiService().addToCart(user.login, user.password, widget.product.id);
-                      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
-                      Cart.instance.setQuantity(widget.product, quantity);
-                      setState(() {});
-                    }
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () async {
-                    User? user = Settings().user;
-                    if (user != null) {
-                      ApiService().removeAllFromCart(user.login, user.password, widget.product.id);
-                      quantity = await ApiService().isInCart(user.login, user.password, widget.product.id);
-                      Cart.instance.deleteFromCart(widget.product);
-                      setState(() {});
-                    }
-                  },
+                  onPressed: () => _updateQuantity(_localQuantity + 1),
                 ),
               ],
             ),
@@ -182,3 +193,4 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
+

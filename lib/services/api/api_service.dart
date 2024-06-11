@@ -1,49 +1,31 @@
-// import 'dart:ffi';
-
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:html_unescape/html_unescape.dart';
+import 'package:new_world_mobile/services/notifications/notifications.dart';
+
 import '../../models/product.dart';
 import 'api.dart';
 
-import 'package:html_unescape/html_unescape.dart';
-
-import 'package:new_world_mobile/services/notifications/notifications.dart';
-
-/// Classe `ApiService` gère les requêtes réseau pour récupérer des données de films depuis une API externe.
-///
-/// Cette classe utilise la bibliothèque Dio pour effectuer des requêtes HTTP. Elle est conçue pour interroger
-/// une API spécifique de films et récupérer des informations telles que les films populaires.
-///
-/// Usage :
-/// Pour utiliser `ApiService`, créez une instance de la classe, puis invoquez les méthodes fournies
-/// pour récupérer les données souhaitées.
 class ApiService {
   final API api = API();
   final Dio dio = Dio();
 
-  /// Récupère les données depuis l'API en utilisant un chemin spécifié et des paramètres optionnels.
-  ///
-  /// [path] Le chemin de la ressource API à laquelle accéder.
-  /// [params] Paramètres optionnels à inclure dans la requête.
-  ///
-  /// Retourne une réponse Dio si la requête aboutit avec un code de statut 200.
-  /// Sinon, lève une exception contenant la réponse de la requête.
+  ApiService._privateConstructor();
+
+  static final ApiService _instance = ApiService._privateConstructor();
+
+  factory ApiService() {
+    return _instance;
+  }
+
   Future<Response> getData(String path, {Map<String, dynamic>? params}) async {
-    // Construction de l'URL complète
     String url = api.baseUrl + path;
-
-    // Ajout des paramètres de requête par défaut et ceux fournis
-    Map<String, dynamic> query = {
-      'language': 'fr-FR',
-    };
-
-    // Ajout des paramètres optionnels
+    Map<String, dynamic> query = {'language': 'fr-FR'};
     if (params != null) {
       query.addAll(params);
     }
 
-    // Lancement de la requète
     try {
       return await dio.get(url, queryParameters: query);
     } on DioException {
@@ -52,24 +34,20 @@ class ApiService {
   }
 
   Future<String> logUser(String mail, String pass) async {
-    Response response = await getData("/request", params: {
-      'for': 'login',
-      'token': api.apikey,
-      'email': mail,
-      'password': pass
-    });
-    print(response.statusCode);
-    print(response.data);
-    if (response.statusCode == 200) {
-      //print(response.data);
-      //print(response.data == 'success');
-      if (response.data == 'success') {
-        return 'user logged';
+    try {
+      Response response = await getData("/request", params: {
+        'for': 'login',
+        'token': api.apikey,
+        'email': mail,
+        'password': pass
+      });
+
+      if (response.statusCode == 200) {
+        return response.data == 'success' ? 'user logged' : 'login fail';
       } else {
-        return 'loging fail';
+        return 'request fail';
       }
-    } else {
-      NotificationsService().setError(true);
+    } catch (e) {
       return 'request fail';
     }
   }
@@ -170,9 +148,10 @@ class ApiService {
     );
   }
 
-  Future<String> addToCart(String mail, String pass, int productId) async {
+  Future<String> updateCart(
+      String action, String mail, String pass, int productId) async {
     Response response = await getData("/request", params: {
-      'for': 'addToCart',
+      'for': action,
       'token': api.apikey,
       'email': mail,
       'password': pass,
@@ -185,19 +164,12 @@ class ApiService {
     }
   }
 
-  Future<String> removeFromCart(String mail, String pass, int productId) async {
-    Response response = await getData("/request", params: {
-      'for': 'removeFromCart',
-      'token': api.apikey,
-      'email': mail,
-      'password': pass,
-      'product': productId
-    });
-    if (response.statusCode == 200) {
-      return response.data;
-    } else {
-      throw response;
-    }
+  Future<String> addToCart(String mail, String pass, int productId) {
+    return updateCart('addToCart', mail, pass, productId);
+  }
+
+  Future<String> removeFromCart(String mail, String pass, int productId) {
+    return updateCart('removeFromCart', mail, pass, productId);
   }
 
   Future<String> removeAllFromCart(
@@ -266,7 +238,8 @@ class ApiService {
     }
   }
 
-  Future<List<Product>> searchProduct(String mail, String pass, String productName) async {
+  Future<List<Product>> searchProduct(
+      String mail, String pass, String productName) async {
     Response response = await getData("/request", params: {
       'for': 'searchProduct',
       'token': api.apikey,

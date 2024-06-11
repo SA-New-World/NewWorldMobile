@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_world_mobile/models/Cart.dart';
 import 'package:new_world_mobile/services/settings/settings.dart';
-import 'package:new_world_mobile/view/components/product_card.dart';
 import '../../models/product.dart';
 import '../../models/user.dart';
 import '../../services/api/api_service.dart';
@@ -56,7 +55,11 @@ class _CartScreenState extends State<CartScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            double total = cart.fold(0, (sum, item) => sum + (item.price * (quantity[item.name] ?? item.quantity)));
+            double total = cart.fold(
+                0,
+                (sum, item) =>
+                    sum +
+                    (item.price * (quantity[item.name] ?? item.quantity)));
             return Column(
               children: [
                 Expanded(
@@ -64,11 +67,13 @@ class _CartScreenState extends State<CartScreen> {
                     itemCount: cart.length,
                     itemBuilder: (context, index) {
                       final product = cart[index];
-                      final productQuantity = quantity[product.name] ?? product.quantity;
+                      final productQuantity =
+                          quantity[product.name] ?? product.quantity;
                       return ListTile(
                         title: Text(product.name),
                         subtitle: Text('${product.price} € x $productQuantity'),
-                        trailing: Text('${(product.price * productQuantity).toStringAsFixed(2)} €'),
+                        trailing: Text(
+                            '${(product.price * productQuantity).toStringAsFixed(2)} €'),
                       );
                     },
                   ),
@@ -81,11 +86,13 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       const Text(
                         'Total',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         '${total.toStringAsFixed(2)} €',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
